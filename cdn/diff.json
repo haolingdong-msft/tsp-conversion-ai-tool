@@ -1,0 +1,3514 @@
+{
+  "paths": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/canMigrate": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/migrate": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      },
+      "put": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDEndpoint"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDEndpoint"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/purge": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/routes/{routeName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/Route"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/Route"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/validateCustomDomain": {
+      "post": {
+        "parameters": [
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            "~",
+            {
+              "schema": {
+                "$ref": {
+                  "__old": "./cdn.json#/definitions/ValidateCustomDomainInput",
+                  "__new": "#/definitions/ValidateCustomDomainInput"
+                }
+              }
+            }
+          ]
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": {
+                "__old": "./cdn.json#/definitions/ValidateCustomDomainOutput",
+                "__new": "#/definitions/ValidateCustomDomainOutput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/cdnCanMigrateToAfd": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/cdnMigrateToAfd": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/checkEndpointNameAvailability": {
+      "post": {
+        "parameters": [
+          [
+            "+",
+            {
+              "name": "profileName",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 260,
+              "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            "-",
+            {
+              "name": "profileName",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 260,
+              "pattern": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability": {
+      "post": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": {
+                "__old": "./cdn.json#/definitions/CheckNameAvailabilityOutput",
+                "__new": "#/definitions/CheckNameAvailabilityOutput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/checkResourceUsage": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}": {
+      "put": {
+        "responses": {
+          "201": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDDomain"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDDomain"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}/refreshValidationToken": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ]
+      },
+      "put": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      },
+      "put": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/disableCustomHttps": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}/enableCustomHttps": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/load": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      },
+      "put": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/origins/{originName}": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      },
+      "put": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/validateCustomDomain": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/generateSsoUri": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getLogAnalyticsLocations": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getLogAnalyticsMetrics": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            "~",
+            {
+              "items": {
+                "x-ms-enum": {
+                  "values__added": [
+                    {
+                      "name": "clientRequestCount",
+                      "value": "clientRequestCount"
+                    },
+                    {
+                      "name": "clientRequestTraffic",
+                      "value": "clientRequestTraffic"
+                    },
+                    {
+                      "name": "clientRequestBandwidth",
+                      "value": "clientRequestBandwidth"
+                    },
+                    {
+                      "name": "originRequestTraffic",
+                      "value": "originRequestTraffic"
+                    },
+                    {
+                      "name": "originRequestBandwidth",
+                      "value": "originRequestBandwidth"
+                    },
+                    {
+                      "name": "totalLatency",
+                      "value": "totalLatency"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getLogAnalyticsRankings": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getLogAnalyticsResources": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getSupportedOptimizationTypes": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsMetrics": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/getWafLogAnalyticsRankings": {
+      "get": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ],
+          [
+            " "
+          ]
+        ]
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/migrationAbort": {
+      "post": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/migrationCommit": {
+      "post": {
+        "parameters": [
+          [
+            "~",
+            {
+              "minLength__added": 1,
+              "maxLength__added": 260,
+              "pattern__added": "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"
+            }
+          ]
+        ],
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDOriginGroup"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDOriginGroup"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDOrigin"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/AFDOrigin"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}": {
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/rules/{ruleName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/Rule"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/Rule"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/secrets/{secretName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/Secret"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}": {
+      "put": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/SecurityPolicy"
+        }
+      },
+      "patch": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-long-running-operation-options": {
+          "final-state-schema__added": "#/definitions/SecurityPolicy"
+        }
+      },
+      "delete": {
+        "responses": {
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Cdn/profiles/{profileName}/upgrade": {
+      "post": {
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": {
+                "__old": "./cdn.json#/definitions/Profile",
+                "__new": "#/definitions/Profile"
+              }
+            }
+          },
+          "202": {
+            "headers__deleted": {
+              "location": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": {
+                "__old": "./cdn.json#/definitions/Profile",
+                "__new": "#/definitions/Profile"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AzureFirstPartyManagedCertificate__deleted": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Certificate"
+        }
+      ]
+    },
+    "Certificate__deleted": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "UrlSigningKey",
+            "CustomerCertificate",
+            "ManagedCertificate",
+            "AzureFirstPartyManagedCertificate"
+          ],
+          "x-ms-enum": {
+            "name": "SecretType",
+            "modelAsString": true
+          }
+        },
+        "subject": {
+          "type": "string",
+          "readOnly": true
+        },
+        "expirationDate": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "CustomerCertificate__deleted": {
+      "type": "object",
+      "properties": {
+        "secretSource": {
+          "$ref": "./cdn.json#/definitions/ResourceReference"
+        },
+        "secretVersion": {
+          "type": "string"
+        },
+        "certificateAuthority": {
+          "type": "string",
+          "readOnly": true
+        },
+        "useLatestVersion": {
+          "type": "boolean"
+        },
+        "subjectAlternativeNames": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "thumbprint": {
+          "type": "string",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/Certificate"
+        }
+      ]
+    },
+    "ManagedCertificate__deleted": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Certificate"
+        }
+      ]
+    },
+    "ValidationToken__deleted": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems__added": {
+      "type": "object",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "value": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems__added": {
+      "type": "object",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "value": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems__added": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "ContinentsResponseContinentsItem__added": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "ContinentsResponseCountryOrRegionsItem__added": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "continentId": {
+          "type": "string"
+        }
+      }
+    },
+    "EndpointPropertiesUpdateParametersDeliveryPolicy__added": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeliveryRule"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        }
+      },
+      "required": [
+        "rules"
+      ]
+    },
+    "EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink__added": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "MetricsResponseSeriesItem__added": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string",
+          "enum": [
+            "count",
+            "bytes",
+            "bitsPerSecond",
+            "milliSeconds"
+          ],
+          "x-ms-enum": {
+            "name": "MetricsSeriesUnit",
+            "modelAsString": true
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MetricsResponseSeriesPropertiesItemsItem"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"
+          }
+        }
+      }
+    },
+    "MetricsResponseSeriesPropertiesItemsItem__added": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "OperationDisplay__added": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "readOnly": true
+        },
+        "resource": {
+          "type": "string",
+          "readOnly": true
+        },
+        "operation": {
+          "type": "string",
+          "readOnly": true
+        },
+        "description": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "RankingsResponseTablesItem__added": {
+      "type": "object",
+      "properties": {
+        "ranking": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RankingsResponseTablesPropertiesItemsItem"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        }
+      }
+    },
+    "RankingsResponseTablesPropertiesItemsItem__added": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RankingsResponseTablesPropertiesItemsMetricsItem"
+          }
+        }
+      }
+    },
+    "RankingsResponseTablesPropertiesItemsMetricsItem__added": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "percentage": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "ResourcesResponseCustomDomainsItem__added": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "endpointId": {
+          "type": "string"
+        },
+        "history": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ResourcesResponseEndpointsItem__added": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "history": {
+          "type": "boolean"
+        },
+        "customDomains": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourcesResponseEndpointsPropertiesItemsItem"
+          }
+        }
+      }
+    },
+    "ResourcesResponseEndpointsPropertiesItemsItem__added": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "endpointId": {
+          "type": "string"
+        },
+        "history": {
+          "type": "boolean"
+        }
+      }
+    },
+    "WafMetricsResponseSeriesItem__added": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string",
+          "enum": [
+            "count"
+          ],
+          "x-ms-enum": {
+            "name": "WafMetricsSeriesUnit",
+            "modelAsString": true
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WafMetricsResponseSeriesPropertiesItemsItem"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"
+          }
+        }
+      }
+    },
+    "WafMetricsResponseSeriesPropertiesItemsItem__added": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "WafRankingsResponseDataItem__added": {
+      "type": "object",
+      "properties": {
+        "groupValues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"
+          }
+        }
+      }
+    },
+    "AFDDomainHttpsParameters": {
+      "properties": {
+        "customizedCipherSuiteSet": {
+          "type__deleted": "object"
+        },
+        "secret": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "AFDDomainListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "AFDDomainProperties": {
+      "allOf__deleted": [
+        {
+          "$ref": "#/definitions/AFDDomainUpdatePropertiesParameters"
+        },
+        {
+          "$ref": "#/definitions/AFDStateProperties"
+        }
+      ],
+      "properties": {
+        "profileName__added": {
+          "type": "string",
+          "readOnly": true
+        },
+        "tlsSettings__added": {
+          "$ref": "#/definitions/AFDDomainHttpsParameters"
+        },
+        "azureDnsZone__added": {
+          "$ref": "#/definitions/ResourceReference"
+        },
+        "preValidatedCustomDomainResourceId__added": {
+          "$ref": "#/definitions/ResourceReference"
+        },
+        "provisioningState__added": {
+          "type": "string",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Updating",
+            "Deleting",
+            "Creating"
+          ],
+          "x-ms-enum": {
+            "name": "AfdProvisioningState",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "deploymentStatus__added": {
+          "type": "string",
+          "enum": [
+            "NotStarted",
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "DeploymentStatus",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "validationProperties": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "AFDDomainUpdatePropertiesParameters": {
+      "properties": {
+        "tlsSettings": {
+          "type__deleted": "object"
+        },
+        "azureDnsZone": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        },
+        "preValidatedCustomDomainResourceId": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "AFDEndpointListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "AFDEndpointProperties": {
+      "allOf__deleted": [
+        {
+          "$ref": "#/definitions/AFDEndpointPropertiesUpdateParameters"
+        },
+        {
+          "$ref": "#/definitions/AFDStateProperties"
+        }
+      ],
+      "properties": {
+        "profileName__added": {
+          "type": "string",
+          "readOnly": true
+        },
+        "enabledState__added": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "EnabledState",
+            "modelAsString": true
+          }
+        },
+        "provisioningState__added": {
+          "type": "string",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Updating",
+            "Deleting",
+            "Creating"
+          ],
+          "x-ms-enum": {
+            "name": "AfdProvisioningState",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "deploymentStatus__added": {
+          "type": "string",
+          "enum": [
+            "NotStarted",
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "DeploymentStatus",
+            "modelAsString": true
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "AFDOriginGroupListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "AFDOriginGroupProperties": {
+      "allOf__deleted": [
+        {
+          "$ref": "#/definitions/AFDOriginGroupUpdatePropertiesParameters"
+        },
+        {
+          "$ref": "#/definitions/AFDStateProperties"
+        }
+      ],
+      "properties__added": {
+        "profileName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "loadBalancingSettings": {
+          "$ref": "#/definitions/LoadBalancingSettingsParameters"
+        },
+        "healthProbeSettings": {
+          "$ref": "#/definitions/HealthProbeParameters"
+        },
+        "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 0,
+          "maximum": 50
+        },
+        "sessionAffinityState": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "EnabledState",
+            "modelAsString": true
+          }
+        },
+        "authentication": {
+          "$ref": "#/definitions/OriginAuthenticationProperties"
+        },
+        "provisioningState": {
+          "type": "string",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Updating",
+            "Deleting",
+            "Creating"
+          ],
+          "x-ms-enum": {
+            "name": "AfdProvisioningState",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "deploymentStatus": {
+          "type": "string",
+          "enum": [
+            "NotStarted",
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "DeploymentStatus",
+            "modelAsString": true
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "AFDOriginGroupUpdatePropertiesParameters": {
+      "properties": {
+        "healthProbeSettings": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/HealthProbeParameters",
+            "__new": "#/definitions/HealthProbeParameters"
+          }
+        },
+        "authentication": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "AFDOriginListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "AFDOriginProperties": {
+      "allOf__deleted": [
+        {
+          "$ref": "#/definitions/AFDOriginUpdatePropertiesParameters"
+        },
+        {
+          "$ref": "#/definitions/AFDStateProperties"
+        }
+      ],
+      "type__added": "object",
+      "properties__added": {
+        "originGroupName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "azureOrigin": {
+          "$ref": "#/definitions/ResourceReference"
+        },
+        "hostName": {
+          "type": "string"
+        },
+        "httpPort": {
+          "type": "integer",
+          "format": "int32",
+          "default": 80,
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "httpsPort": {
+          "type": "integer",
+          "format": "int32",
+          "default": 443,
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "originHostHeader": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "sharedPrivateLinkResource": {
+          "$ref": "#/definitions/SharedPrivateLinkResourceProperties"
+        },
+        "enabledState": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "EnabledState",
+            "modelAsString": true
+          }
+        },
+        "enforceCertificateNameCheck": {
+          "type": "boolean",
+          "default": true
+        },
+        "provisioningState": {
+          "type": "string",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Updating",
+            "Deleting",
+            "Creating"
+          ],
+          "x-ms-enum": {
+            "name": "AfdProvisioningState",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "deploymentStatus": {
+          "type": "string",
+          "enum": [
+            "NotStarted",
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "DeploymentStatus",
+            "modelAsString": true
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "AFDOriginUpdatePropertiesParameters": {
+      "required__added": [
+        "hostName"
+      ],
+      "properties": {
+        "azureOrigin": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        },
+        "httpPort": {
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        },
+        "httpsPort": {
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        },
+        "sharedPrivateLinkResource": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "AfdRouteCacheConfiguration": {
+      "properties": {
+        "compressionSettings": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "AzureFirstPartyManagedCertificateParameters": {
+      "properties": {
+        "secretSource": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        },
+        "subjectAlternativeNames": {
+          "items": {
+            "readOnly__deleted": true
+          }
+        }
+      }
+    },
+    "CdnEndpoint": {
+      "readOnly__deleted": true
+    },
+    "CdnWebApplicationFirewallPolicy": {
+      "properties": {
+        "sku": {
+          "$ref": {
+            "__old": "./cdn.json#/definitions/Sku",
+            "__new": "#/definitions/Sku"
+          }
+        }
+      }
+    },
+    "CdnWebApplicationFirewallPolicyList": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "CdnWebApplicationFirewallPolicyProperties": {
+      "properties": {
+        "resourceState": {
+          "title__deleted": "Resource status of the policy."
+        }
+      }
+    },
+    "CheckEndpointNameAvailabilityInput": {
+      "properties": {
+        "type": {
+          "$ref__deleted": "./cdn.json#/definitions/ResourceType",
+          "type__added": "string",
+          "enum__added": [
+            "Microsoft.Cdn/Profiles/Endpoints",
+            "Microsoft.Cdn/Profiles/AfdEndpoints"
+          ],
+          "x-ms-enum__added": {
+            "name": "ResourceType",
+            "modelAsString": true
+          }
+        }
+      }
+    },
+    "ContinentsResponse": {
+      "properties": {
+        "continents": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "id": {
+                "type": "string"
+              }
+            },
+            "$ref__added": "#/definitions/ContinentsResponseContinentsItem"
+          }
+        },
+        "countryOrRegions": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "id": {
+                "type": "string"
+              },
+              "continentId": {
+                "type": "string"
+              }
+            },
+            "$ref__added": "#/definitions/ContinentsResponseCountryOrRegionsItem"
+          }
+        }
+      }
+    },
+    "CustomDomainListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "CustomRule": {
+      "properties": {
+        "priority": {
+          "minimum__deleted": 0,
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        }
+      }
+    },
+    "CustomerCertificateParameters": {
+      "properties": {
+        "secretSource": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        },
+        "subjectAlternativeNames": {
+          "items": {
+            "readOnly__deleted": true
+          }
+        }
+      }
+    },
+    "DeepCreatedOrigin": {
+      "x-ms-azure-resource__deleted": false
+    },
+    "DeepCreatedOriginGroup": {
+      "x-ms-azure-resource__deleted": false
+    },
+    "DeepCreatedOriginGroupProperties": {
+      "x-ms-azure-resource__deleted": false,
+      "properties": {
+        "healthProbeSettings": {
+          "type__deleted": "object"
+        },
+        "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": {
+          "minimum__deleted": 0
+        },
+        "responseBasedOriginErrorDetectionSettings": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "DeepCreatedOriginProperties": {
+      "x-ms-azure-resource__deleted": false,
+      "properties": {
+        "httpPort": {
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        },
+        "httpsPort": {
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        }
+      }
+    },
+    "EdgenodeResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "EndpointListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "EndpointPropertiesUpdateParameters": {
+      "properties": {
+        "defaultOriginGroup": {
+          "type__deleted": "object"
+        },
+        "deliveryPolicy": {
+          "type__deleted": "object",
+          "properties__deleted": {
+            "description": {
+              "type": "string",
+              "description": "User-friendly description of the policy."
+            },
+            "rules": {
+              "type": "array",
+              "description": "A list of the delivery rules.",
+              "items": {
+                "$ref": "#/definitions/DeliveryRule"
+              },
+              "x-ms-identifiers": [
+                "name"
+              ]
+            }
+          },
+          "required__deleted": [
+            "rules"
+          ],
+          "$ref__added": "#/definitions/EndpointPropertiesUpdateParametersDeliveryPolicy"
+        },
+        "webApplicationFirewallPolicyLink": {
+          "type__deleted": "object",
+          "properties__deleted": {
+            "id": {
+              "type": "string",
+              "description": "Resource ID."
+            }
+          },
+          "$ref__added": "#/definitions/EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink"
+        }
+      }
+    },
+    "ManagedRuleSet": {
+      "properties": {
+        "anomalyScore": {
+          "minimum__deleted": 0,
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        }
+      }
+    },
+    "ManagedRuleSetDefinition": {
+      "properties": {
+        "sku": {
+          "$ref": {
+            "__old": "./cdn.json#/definitions/Sku",
+            "__new": "#/definitions/Sku"
+          }
+        }
+      }
+    },
+    "ManagedRuleSetDefinitionList": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "MetricsResponse": {
+      "properties": {
+        "series": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "metric": {
+                "type": "string"
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "count",
+                  "bytes",
+                  "bitsPerSecond",
+                  "milliSeconds"
+                ],
+                "x-ms-enum": {
+                  "name": "MetricsSeriesUnit",
+                  "modelAsString": true
+                }
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "x-ms-identifiers": [
+                  "name"
+                ]
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "dateTime": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "value": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "x-ms-identifiers": []
+              }
+            },
+            "$ref__added": "#/definitions/MetricsResponseSeriesItem"
+          }
+        }
+      }
+    },
+    "Operation": {
+      "properties": {
+        "display": {
+          "type__deleted": "object",
+          "properties__deleted": {
+            "provider": {
+              "type": "string",
+              "description": "Service provider: Microsoft.Cdn",
+              "readOnly": true
+            },
+            "resource": {
+              "type": "string",
+              "description": "Resource on which the operation is performed: Profile, endpoint, etc.",
+              "readOnly": true
+            },
+            "operation": {
+              "type": "string",
+              "description": "Operation type: Read, write, delete, etc.",
+              "readOnly": true
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of operation.",
+              "readOnly": true
+            }
+          },
+          "$ref__added": "#/definitions/OperationDisplay"
+        },
+        "properties": {
+          "x-ms-client-name": {
+            "__old": "OperationProperties",
+            "__new": "operationProperties"
+          }
+        }
+      }
+    },
+    "OperationsListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "x-ms-identifiers__deleted": [
+            "name"
+          ]
+        }
+      }
+    },
+    "OriginAuthenticationProperties": {
+      "properties": {
+        "userAssignedIdentity": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "OriginGroupListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "OriginGroupOverride": {
+      "properties": {
+        "originGroup": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "OriginGroupOverrideActionParameters": {
+      "properties": {
+        "originGroup": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "OriginGroupProperties": {
+      "required__deleted": [
+        "origins"
+      ]
+    },
+    "OriginGroupUpdatePropertiesParameters": {
+      "properties": {
+        "healthProbeSettings": {
+          "type__deleted": "object"
+        },
+        "trafficRestorationTimeToHealedOrNewEndpointsInMinutes": {
+          "minimum__deleted": 0
+        },
+        "responseBasedOriginErrorDetectionSettings": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "OriginListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "OriginProperties": {
+      "required__deleted": [
+        "hostName"
+      ]
+    },
+    "OriginUpdatePropertiesParameters": {
+      "properties": {
+        "httpPort": {
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        },
+        "httpsPort": {
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        }
+      }
+    },
+    "Profile": {
+      "properties": {
+        "identity": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "ProfileChangeSkuWafMapping": {
+      "properties": {
+        "changeToWafPolicy": {
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "ProfileListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "ProfileProperties": {
+      "properties": {
+        "originResponseTimeoutSeconds": {
+          "exclusiveMinimum__deleted": false
+        }
+      }
+    },
+    "ProfilePropertiesUpdateParameters": {
+      "properties": {
+        "originResponseTimeoutSeconds": {
+          "exclusiveMinimum__deleted": false
+        }
+      }
+    },
+    "ProfileScrubbingRules": {
+      "properties": {
+        "selectorMatchOperator": {
+          "x-ms-enum": {
+            "name": {
+              "__old": " scrubbingRuleEntryMatchOperator",
+              "__new": "ScrubbingRuleEntryMatchOperator"
+            }
+          }
+        },
+        "state": {
+          "x-ms-enum": {
+            "name": {
+              "__old": " scrubbingRuleEntryState",
+              "__new": "ScrubbingRuleEntryState"
+            }
+          }
+        }
+      }
+    },
+    "ProfileUpdateParameters": {
+      "properties": {
+        "identity": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "RankingsResponse": {
+      "properties": {
+        "tables": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "ranking": {
+                "type": "string"
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "metrics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "metric": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "percentage": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "x-ms-identifiers": []
+                    }
+                  }
+                },
+                "x-ms-identifiers": [
+                  "name"
+                ]
+              }
+            },
+            "$ref__added": "#/definitions/RankingsResponseTablesItem"
+          }
+        }
+      }
+    },
+    "RateLimitRule": {
+      "properties": {
+        "rateLimitThreshold": {
+          "minimum__deleted": 0,
+          "exclusiveMinimum__deleted": false
+        },
+        "rateLimitDurationInMinutes": {
+          "minimum__deleted": 0,
+          "exclusiveMinimum__deleted": false,
+          "exclusiveMaximum__deleted": false
+        }
+      }
+    },
+    "RequestSchemeMatchConditionParameters": {
+      "properties": {
+        "operator": {
+          "x-ms-enum__added": {
+            "name": "RequestSchemeMatchConditionParametersOperator",
+            "modelAsString": true
+          }
+        }
+      }
+    },
+    "ResourceUsageListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true,
+          "x-ms-identifiers__deleted": [
+            "resourceType"
+          ]
+        }
+      }
+    },
+    "ResourcesResponse": {
+      "properties": {
+        "endpoints": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "history": {
+                "type": "boolean"
+              },
+              "customDomains": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "endpointId": {
+                      "type": "string"
+                    },
+                    "history": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "$ref__added": "#/definitions/ResourcesResponseEndpointsItem"
+          }
+        },
+        "customDomains": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "endpointId": {
+                "type": "string"
+              },
+              "history": {
+                "type": "boolean"
+              }
+            },
+            "$ref__added": "#/definitions/ResourcesResponseCustomDomainsItem"
+          }
+        }
+      }
+    },
+    "ResponseBasedOriginErrorDetectionParameters": {
+      "properties": {
+        "responseBasedFailoverThresholdPercentage": {
+          "minimum__deleted": 0
+        }
+      }
+    },
+    "RouteConfigurationOverrideActionParameters": {
+      "properties": {
+        "originGroupOverride": {
+          "type__deleted": "object"
+        },
+        "cacheConfiguration": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "RouteListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "RouteProperties": {
+      "required__deleted": [
+        "originGroup"
+      ],
+      "allOf__deleted": [
+        {
+          "$ref": "#/definitions/RouteUpdatePropertiesParameters"
+        },
+        {
+          "$ref": "#/definitions/AFDStateProperties"
+        }
+      ],
+      "type__added": "object",
+      "properties__added": {
+        "endpointName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "customDomains": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivatedResourceReference"
+          }
+        },
+        "originGroup": {
+          "$ref": "#/definitions/ResourceReference"
+        },
+        "originPath": {
+          "type": "string"
+        },
+        "ruleSets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceReference"
+          }
+        },
+        "supportedProtocols": {
+          "type": "array",
+          "default": [
+            "Http",
+            "Https"
+          ],
+          "items": {
+            "type": "string",
+            "enum": [
+              "Http",
+              "Https"
+            ],
+            "x-ms-enum": {
+              "name": "AFDEndpointProtocols",
+              "modelAsString": true
+            }
+          }
+        },
+        "patternsToMatch": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cacheConfiguration": {
+          "$ref": "#/definitions/AfdRouteCacheConfiguration"
+        },
+        "forwardingProtocol": {
+          "type": "string",
+          "default": "MatchRequest",
+          "enum": [
+            "HttpOnly",
+            "HttpsOnly",
+            "MatchRequest"
+          ],
+          "x-ms-enum": {
+            "name": "ForwardingProtocol",
+            "modelAsString": true
+          }
+        },
+        "linkToDefaultDomain": {
+          "type": "string",
+          "default": "Disabled",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "LinkToDefaultDomain",
+            "modelAsString": true
+          }
+        },
+        "httpsRedirect": {
+          "type": "string",
+          "default": "Disabled",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "HttpsRedirect",
+            "modelAsString": true
+          }
+        },
+        "enabledState": {
+          "type": "string",
+          "enum": [
+            "Enabled",
+            "Disabled"
+          ],
+          "x-ms-enum": {
+            "name": "EnabledState",
+            "modelAsString": true
+          }
+        },
+        "provisioningState": {
+          "type": "string",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Updating",
+            "Deleting",
+            "Creating"
+          ],
+          "x-ms-enum": {
+            "name": "AfdProvisioningState",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "deploymentStatus": {
+          "type": "string",
+          "enum": [
+            "NotStarted",
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "DeploymentStatus",
+            "modelAsString": true
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "RouteUpdatePropertiesParameters": {
+      "properties": {
+        "originGroup": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        },
+        "ruleSets": {
+          "items": {
+            "$ref": {
+              "__old": "./cdn.json#/definitions/ResourceReference",
+              "__new": "#/definitions/ResourceReference"
+            }
+          }
+        },
+        "cacheConfiguration": {
+          "type__deleted": "object"
+        }
+      }
+    },
+    "RuleListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "RuleProperties": {
+      "required__deleted": [
+        "actions",
+        "order"
+      ],
+      "allOf__deleted": [
+        {
+          "$ref": "#/definitions/RuleUpdatePropertiesParameters"
+        },
+        {
+          "$ref": "#/definitions/AFDStateProperties"
+        }
+      ],
+      "properties__added": {
+        "ruleSetName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeliveryRuleCondition"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeliveryRuleAction"
+          },
+          "x-ms-identifiers": [
+            "name"
+          ]
+        },
+        "matchProcessingBehavior": {
+          "type": "string",
+          "default": "Continue",
+          "enum": [
+            "Continue",
+            "Stop"
+          ],
+          "x-ms-enum": {
+            "name": "MatchProcessingBehavior",
+            "modelAsString": true
+          }
+        },
+        "provisioningState": {
+          "type": "string",
+          "enum": [
+            "Succeeded",
+            "Failed",
+            "Updating",
+            "Deleting",
+            "Creating"
+          ],
+          "x-ms-enum": {
+            "name": "AfdProvisioningState",
+            "modelAsString": true
+          },
+          "readOnly": true
+        },
+        "deploymentStatus": {
+          "type": "string",
+          "enum": [
+            "NotStarted",
+            "InProgress",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "DeploymentStatus",
+            "modelAsString": true
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "RuleSetListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "RuleUpdatePropertiesParameters": {
+      "properties": {
+        "conditions": {
+          "items": {
+            "$ref": {
+              "__old": "./cdn.json#/definitions/DeliveryRuleCondition",
+              "__new": "#/definitions/DeliveryRuleCondition"
+            }
+          }
+        },
+        "actions": {
+          "items": {
+            "$ref": {
+              "__old": "./cdn.json#/definitions/DeliveryRuleAction",
+              "__new": "#/definitions/DeliveryRuleAction"
+            }
+          }
+        }
+      }
+    },
+    "SecretListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "SecurityPolicyListResult": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "SecurityPolicyWebApplicationFirewallParameters": {
+      "properties": {
+        "wafPolicy": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "SharedPrivateLinkResourceProperties": {
+      "properties": {
+        "privateLink": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "UrlSigningKeyParameters": {
+      "properties": {
+        "secretSource": {
+          "type__deleted": "object",
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "UsagesListResult": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "ValidateSecretInput": {
+      "properties": {
+        "secretSource": {
+          "$ref": {
+            "__old": "./cdn.json#/definitions/ResourceReference",
+            "__new": "#/definitions/ResourceReference"
+          }
+        }
+      }
+    },
+    "WafMetricsResponse": {
+      "properties": {
+        "series": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "metric": {
+                "type": "string"
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "count"
+                ],
+                "x-ms-enum": {
+                  "name": "WafMetricsSeriesUnit",
+                  "modelAsString": true
+                }
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "x-ms-identifiers": [
+                  "name"
+                ]
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "dateTime": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "value": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "x-ms-identifiers": []
+              }
+            },
+            "$ref__added": "#/definitions/WafMetricsResponseSeriesItem"
+          }
+        }
+      }
+    },
+    "WafRankingsResponse": {
+      "properties": {
+        "data": {
+          "items": {
+            "type__deleted": "object",
+            "properties__deleted": {
+              "groupValues": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "metric": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "percentage": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  }
+                },
+                "x-ms-identifiers": []
+              }
+            },
+            "$ref__added": "#/definitions/WafRankingsResponseDataItem"
+          }
+        }
+      }
+    },
+    "policySettings": {
+      "properties": {
+        "defaultCustomBlockResponseStatusCode": {
+          "format__deleted": "int32",
+          "x-ms-enum__added": {
+            "name": "PolicySettingsDefaultCustomBlockResponseStatusCode",
+            "modelAsString": true
+          },
+          "type": {
+            "__old": "integer",
+            "__new": "number"
+          }
+        }
+      }
+    }
+  }
+}

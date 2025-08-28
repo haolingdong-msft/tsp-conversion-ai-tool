@@ -1,0 +1,12 @@
+{
+	"servers": {
+		"typespec-conversion-ai-tools-mcp": {
+			"type": "stdio",
+			"command": "node",
+			"args": [
+                "C:\\workspace\\tsp-conversion-ai-tool\\mcp\\dist\\index.js"
+            ]
+		}
+	},
+	"inputs": []
+}
