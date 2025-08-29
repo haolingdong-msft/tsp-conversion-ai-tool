@@ -1,6 +1,6 @@
 # TypeSpec Conversion AI Tool
 
-A Model Context Protocol (MCP) server that provides AI-powered tools for TypeSpec conversion and swagger functional equivalence analysis.
+A Model Context Protocol (MCP) server that provides AI-powered tools for TypeSpec conversion and swagger semantic diff analysis.
 
 ## Getting Started
 
@@ -61,10 +61,10 @@ With the following configuration:
 
 Once configured, you can use the following AI prompts in Claude Dev:
 
-- **Analyze swagger functional equivalence:**
+- **Analyze swagger semantic diff:**
   ```
-  analyze swagger functional equivalence for <service-name>
+  analyze swagger semantic diff for <service-name>
   ```
   Add the diff-output folder to chat context for analysis.
 
-The tool will provide comprehensive functional equivalence analysis between old and new swagger specifications, helping ensure API compatibility during TypeSpec migrations.
+The tool will provide comprehensive semantic diff analysis between old and new swagger specifications, categorizing changes and identifying their semantic impact during TypeSpec migrations.

@@ -1,4 +1,4 @@
-# CDN API Functional Equivalence Analysis
+# CDN API Semantic Diff Analysis
 
 ## Executive Summary
 

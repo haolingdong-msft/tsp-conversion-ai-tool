@@ -1,10 +1,4 @@
-# [Service Name] API Functional Equivalence Analysis
-
-## Executive Summary
-
-**RECOMMENDATION: [APPROVE/REJECT] MIGRATION - [X]% FUNCTIONALLY EQUIVALENT**
-
-This analysis examines all [X] individual differences between the old and new normalized swagger files for [Service Name] API version [X.X.X]. Every change has been categorized semantically and determined to be **[functionally equivalent/contains breaking changes]** with **[X] breaking changes**. The migration represents [description of overall impact: structural improvements, modernization, breaking changes, etc.].
+# [Service Name] API Semantic Diff Analysis
 
 ## Analysis Methodology
 
@@ -13,16 +7,14 @@ This analysis examines all [X] individual differences between the old and new no
    - [New Swagger: `[filename].json`]([path/to/new/swagger]) 
    - [Change Documentation: `API_CHANGES.md`]([path/to/changes])
 
-2. **Semantic Categorization:** Changes grouped by functional impact rather than structural differences
+2. **Semantic Categorization:** Changes grouped by semantic impact rather than structural differences
 3. **Coverage Verification:** All [X] items from API_CHANGES.md accounted for
-4. **Functional Impact Assessment:** Each category evaluated for breaking changes
 
 ---
 
 ## Detailed Category Analysis
 
 ### 1. [Category Name] ([X] changes)
-**Functional Impact:** [✅ NON-BREAKING | ❌ BREAKING] - [Brief impact description]
 
 **Description:** [Detailed description of what changes in this category represent]
 
@@ -41,17 +33,13 @@ This analysis examines all [X] individual differences between the old and new no
 
 **Complete List ([X] cases):**
 [Lines X-Y in API_CHANGES.md](API_CHANGES.md#LX-LY)
-- [Bullet point summary of affected areas]
+- [Bullet point summary of affected areas, if it is path change, add operationId, operation_id example: "operationId": "EdgeNodes_List`]
 - [Additional affected areas]
 
-**Breaking Change Assessment:**
-- [If breaking: specific explanation of why it breaks compatibility]
-- [If non-breaking: explanation of why it maintains compatibility]
 
 ---
 
 ### 2. [Category Name] ([X] changes)
-**Functional Impact:** [✅ NON-BREAKING | ❌ BREAKING] - [Brief impact description]
 
 **Description:** [Detailed description]
 
@@ -69,9 +57,6 @@ This analysis examines all [X] individual differences between the old and new no
 
 **Complete List ([X] cases):**
 [Lines X-Y in API_CHANGES.md](API_CHANGES.md#LX-LY)
-
-**Breaking Change Assessment:**
-- [Assessment details]
 
 ---
 

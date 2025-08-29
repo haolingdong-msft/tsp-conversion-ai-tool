@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 // Server configuration
 const server = new Server(
   {
-    name: "swagger-equivalence-analyzer",
+    name: "swagger-semantic-diff-analyzer",
     version: "1.0.0",
   },
   {
@@ -34,7 +34,7 @@ const server = new Server(
 
 // Read template and instruction files
 async function readTemplateFiles() {
-  const templatePath = path.join(__dirname, "..", "SWAGGER_FUNCTIONAL_EQUIVALENCE_ANALYSIS_TEMPLATE.md");
+  const templatePath = path.join(__dirname, "..", "SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md");
   const instructionsPath = path.join(__dirname, "..", "prompts.md");
   
   try {
@@ -47,118 +47,13 @@ async function readTemplateFiles() {
   }
 }
 
-// List available prompts
-server.setRequestHandler(ListPromptsRequestSchema, async () => {
-  return {
-    prompts: [
-      {
-        name: "swagger-functional-equivalence-analysis",
-        description: "Analyze functional equivalence between old and new swagger files using API changes documentation",
-        arguments: [
-          {
-            name: "service_name",
-            description: "Name of the service being analyzed",
-            required: false,
-          },
-          {
-            name: "old_swagger_path",
-            description: "Path to the old normalized swagger file",
-            required: false,
-          },
-          {
-            name: "new_swagger_path", 
-            description: "Path to the new normalized swagger file",
-            required: false,
-          },
-          {
-            name: "api_changes_path",
-            description: "Path to the API_CHANGES.md file",
-            required: false,
-          },
-        ],
-      },
-    ],
-  };
-});
-
-// Get specific prompt
-server.setRequestHandler(GetPromptRequestSchema, async (request: GetPromptRequest) => {
-  if (request.params.name !== "swagger-functional-equivalence-analysis") {
-    throw new Error(`Unknown prompt: ${request.params.name}`);
-  }
-
-  const args = request.params.arguments || {};
-  const serviceName = args.service_name || "[Service Name]";
-  const apiVersion = args.api_version || "[X.X.X]";
-  const oldSwaggerPath = args.old_swagger_path || "[path/to/old/swagger]";
-  const newSwaggerPath = args.new_swagger_path || "[path/to/new/swagger]";
-  const apiChangesPath = args.api_changes_path || "[path/to/changes]";
-
-  try {
-    const { template, instructions } = await readTemplateFiles();
-    
-    // Create the customized template with provided arguments
-    let customizedTemplate = template
-      .replace(/\[Service Name\]/g, serviceName)
-      .replace(/\[X\.X\.X\]/g, apiVersion)
-      .replace(/\[path\/to\/old\/swagger\]/g, oldSwaggerPath)
-      .replace(/\[path\/to\/new\/swagger\]/g, newSwaggerPath)
-      .replace(/\[path\/to\/changes\]/g, apiChangesPath);
-
-    const promptText = `${instructions}
-
-## Analysis Template
-
-Use the following template for your analysis output:
-
-${customizedTemplate}
-
-## Instructions for Analysis
-
-1. **Read Input Files**: Carefully analyze the provided swagger files and API changes documentation
-2. **Categorize Changes**: Group changes semantically, focusing on functional impact rather than structural differences
-3. **Assess Breaking Changes**: Determine if each category represents breaking or non-breaking changes
-4. **Provide Examples**: Include specific code snippets and references for each category
-5. **Verify Coverage**: Ensure all items from API_CHANGES.md are addressed in your analysis
-6. **Generate Summary**: Create a comprehensive report following the template format
-
-## Key Analysis Principles
-
-- **Semantic vs Structural**: Focus on functional differences, not just structural changes
-- **Functional Equivalence**: Changes that don't affect API behavior are considered equivalent
-- **Complete Coverage**: Every diff in API_CHANGES.md must be categorized and analyzed
-
-Remember to:
-- Link to specific lines in the API_CHANGES.md file
-- Provide clear code examples from both old and new swagger files
-- Categorize changes by their semantic meaning
-- Assess the functional impact of each category`;
-
-    return {
-      description: `Analyze functional equivalence between swagger files for ${serviceName} API v${apiVersion}`,
-      messages: [
-        {
-          role: "user",
-          content: {
-            type: "text",
-            text: promptText,
-          },
-        },
-      ],
-    };
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    throw new Error(`Failed to generate prompt: ${errorMessage}`);
-  }
-});
-
 // List available tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
       {
         name: "get-swagger-analysis-instructions",
-        description: "Get comprehensive instructions and template for creating a swagger functional equivalence analysis summary",
+        description: "Get comprehensive instructions and template for creating a swagger semantic diff analysis summary",
         inputSchema: {
           type: "object",
           properties: {
@@ -209,7 +104,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
         .replace(/\[path\/to\/new\/swagger\]/g, newSwaggerPath)
         .replace(/\[path\/to\/changes\]/g, apiChangesPath);
 
-      const fullInstructions = `# Swagger Functional Equivalence Analysis Instructions
+      const fullInstructions = `# Swagger Semantic Diff Analysis Instructions
 
 ## Overview
 ${instructions}
@@ -252,21 +147,21 @@ Create a markdown report following the template that includes:
 ## Key Analysis Principles
 
 1. **Semantic Focus**: Analyze what the API does, not just how it's structured
-2. **Functional Equivalence**: Changes that don't affect client behavior are equivalent
+2. **Semantic Impact**: Focus on how changes affect the API's semantic meaning  
 3. **Complete Coverage**: Every line in API_CHANGES.md must be categorized
 4. **Evidence-Based**: Provide specific examples and code snippets for each category
-5. **Clear Assessment**: Explicitly state breaking vs non-breaking for each category
+5. **Clear Categorization**: Group changes by their semantic impact and meaning
 
 ## Quality Checklist
 
 - [ ] All items from API_CHANGES.md are categorized
 - [ ] Each category has clear examples with code snippets
-- [ ] Breaking changes are clearly identified and justified
+- [ ] Semantic changes are clearly identified and categorized
 - [ ] Links to source files are provided
 - [ ] Executive summary reflects the detailed analysis
 - [ ] Verification table shows complete coverage
 
-Use this template and follow these instructions to create a comprehensive functional equivalence analysis.`;
+Use this template and follow these instructions to create a comprehensive semantic diff analysis.`;
 
       return {
         content: [
@@ -297,7 +192,7 @@ Use this template and follow these instructions to create a comprehensive functi
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Swagger Equivalence MCP Server running on stdio");
+  console.error("Swagger Semantic Diff MCP Server running on stdio");
 }
 
 main().catch((error) => {
