@@ -52,8 +52,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
       {
-        name: "get-swagger-analysis-instructions",
-        description: "Get comprehensive instructions and template for creating a swagger semantic diff analysis summary",
+        name: "swagger-semantic-diff-analyze",
+        description: "Analyze semantic diff between two swagger files",
         inputSchema: {
           type: "object",
           properties: {
@@ -85,7 +85,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
   const { name, arguments: args } = request.params;
 
-  if (name === "get-swagger-analysis-instructions") {
+  if (name === "swagger-semantic-diff-analyze") {
     try {
       const { template, instructions } = await readTemplateFiles();
       
@@ -106,60 +106,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
 
       const fullInstructions = `# Swagger Semantic Diff Analysis Instructions
 
-## Overview
+## Instructions
 ${instructions}
 
 ## Analysis Template
 ${customizedTemplate}
-
-## Step-by-Step Analysis Workflow
-
-### Step 1: Understand Input Files
-- **Old Swagger**: \`${oldSwaggerPath}\` - The original swagger specification
-- **New Swagger**: \`${newSwaggerPath}\` - The migrated swagger specification  
-- **API Changes**: \`${apiChangesPath}\` - Documentation of all differences between old and new swagger
-
-### Step 2: Categorize Changes Semantically
-Group changes by their functional meaning rather than structural differences:
-- **Model Restructuring**: Same models created inline vs referenced
-- **Property Ordering**: Changes in property order without semantic impact
-- **Description Updates**: Documentation improvements without functional changes
-- **Schema Formatting**: Different ways of expressing the same constraints
-- **Reference Patterns**: Changes from inline to $ref or vice versa
-- **Default Value Handling**: Different ways of expressing default behaviors
-- **Breaking Changes**: Any changes that affect API contract or behavior
-
-### Step 3: Assess Each Category
-For each category, determine:
-- **Functional Impact**: Breaking vs Non-breaking
-- **Examples**: Specific instances with code snippets
-- **Coverage**: All related items from API_CHANGES.md
-- **Assessment**: Why it's considered equivalent or breaking
-
-### Step 4: Generate Complete Summary
-Create a markdown report following the template that includes:
-- Executive summary with recommendation
-- Detailed category analysis
-- Code comparisons
-- Complete coverage verification
-- Links to source files and specific changes
-
-## Key Analysis Principles
-
-1. **Semantic Focus**: Analyze what the API does, not just how it's structured
-2. **Semantic Impact**: Focus on how changes affect the API's semantic meaning  
-3. **Complete Coverage**: Every line in API_CHANGES.md must be categorized
-4. **Evidence-Based**: Provide specific examples and code snippets for each category
-5. **Clear Categorization**: Group changes by their semantic impact and meaning
-
-## Quality Checklist
-
-- [ ] All items from API_CHANGES.md are categorized
-- [ ] Each category has clear examples with code snippets
-- [ ] Semantic changes are clearly identified and categorized
-- [ ] Links to source files are provided
-- [ ] Executive summary reflects the detailed analysis
-- [ ] Verification table shows complete coverage
 
 Use this template and follow these instructions to create a comprehensive semantic diff analysis.`;
 

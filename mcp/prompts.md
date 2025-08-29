@@ -4,8 +4,7 @@ You are an expert of identify semantic diffs between two swaggers. Take three in
 3. `API_CHANGES.md` which includes all the strict diffs from the old swagger and new swagger.
 
 Your output:
-1. A summary markdown file named like `SWAGGER_SEMANTIC_DIFF_ANALYSIS.md` in the format of `SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md` of all the categorized diffs. Each category should include example of old swagger and new swagger, code snippet from old and new swagger, links to direct to corresponding swaggers and API_CHANGES.md, as well as list ALL the cases associated with this category. 
-2. Make sure each category has the complete diff list.
+1. A summary markdown file named like `SWAGGER_SEMANTIC_DIFF_ANALYSIS.md` in the format of `SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md` of all the categorized diffs. Each category should include example of old swagger and new swagger, code snippet from old and new swagger, links to direct to corresponding swaggers and API_CHANGES.md, as well as list ALL the cases associated with this category. List them one by one.
 3. Make sure in your coverage summary, each diff number sums up to TOTAL_DIFF_COUNT_IN_API_CHANGES.
 4. DONT output any opinion on breaking changes or semantic impact.
 
