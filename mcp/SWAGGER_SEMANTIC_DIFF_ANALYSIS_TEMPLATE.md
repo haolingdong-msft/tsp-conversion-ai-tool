@@ -33,7 +33,7 @@
 
 **Complete List ([X] cases):**
 [Lines X-Y in API_CHANGES.md](API_CHANGES.md#LX-LY)
-- [Bullet point summary of affected areas, if it is path change, add operationId, operation_id example: "operationId": "EdgeNodes_List`]
+- [Bullet point of affected areas, if it is path change, add operationId value, operation_id example: "operationId": "EdgeNodes_List", so operationId value would be 'EdgeNodes_List']
 - [Additional affected areas]
 
 
