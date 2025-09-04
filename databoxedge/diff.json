@@ -1,0 +1,845 @@
+{
+  "info": {
+    "description__added": "// (missing-service-description) Add service description"
+  },
+  "paths": {
+    "/subscriptions/{subscriptionId}/providers/microsoft.DataBoxEdge/availableSkus": {
+      "get": {
+        "x-ms-pageable__deleted": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityCheck": {
+      "post": {
+        "parameters": [
+          [
+            " "
+          ],
+          [
+            "+",
+            {
+              "name": "capacityName",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          [
+            " "
+          ],
+          [
+            "-",
+            {
+              "name": "capacityName",
+              "in": "query",
+              "type": "string"
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "DataBoxEdgeMoveRequest__deleted": {
+      "type": "object",
+      "properties": {
+        "targetResourceGroup": {
+          "type": "string"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "resources",
+        "targetResourceGroup"
+      ]
+    },
+    "TypeSpec.Http.NoContentResponse__added": {
+      "type": "object"
+    },
+    "TypeSpec.Http.OkResponse__added": {
+      "type": "object"
+    },
+    "Addon": {
+      "discriminator__deleted": "kind",
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        },
+        "properties__added": {
+          "type": "object",
+          "x-ms-client-flatten": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "AddonList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "Alert": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        },
+        "properties": {
+          "readOnly__deleted": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "AlertList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "ArcAddon": {
+      "x-ms-discriminator-value__deleted": "ArcForKubernetes",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "ArcForKubernetes"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "AsymmetricEncryptedSecret": {
+      "properties": {
+        "encryptionCertThumbprint": {
+          "x-ms-secret__deleted": true
+        }
+      }
+    },
+    "BandwidthSchedule": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "BandwidthScheduleProperties": {
+      "properties": {
+        "days": {
+          "items": {
+            "x-ms-identifiers__deleted": []
+          }
+        }
+      }
+    },
+    "BandwidthSchedulesList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "CloudEdgeManagementRole": {
+      "x-ms-discriminator-value__deleted": "CloudEdgeManagement",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "CloudEdgeManagement"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "CloudError": {
+      "x-ms-external__deleted": true
+    },
+    "CloudErrorBody": {
+      "x-ms-external__deleted": true
+    },
+    "Container": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "ContainerList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "DataBoxEdgeDevice": {
+      "required__deleted": [
+        "location"
+      ],
+      "properties": {
+        "location__deleted": {
+          "type": "string",
+          "x-ms-mutability": [
+            "create",
+            "read"
+          ]
+        },
+        "tags__deleted": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/TrackedResource"
+            }
+          }
+        ]
+      ]
+    },
+    "DataBoxEdgeDeviceExtendedInfo": {
+      "properties": {
+        "systemData": {
+          "$ref": {
+            "__old": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+            "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/systemData"
+          }
+        }
+      }
+    },
+    "DataBoxEdgeDeviceList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "DataBoxEdgeDeviceProperties": {
+      "properties": {
+        "systemData": {
+          "$ref": {
+            "__old": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+            "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/systemData"
+          }
+        },
+        "configuredRoleTypes": {
+          "items": {
+            "x-ms-identifiers__deleted": []
+          }
+        }
+      }
+    },
+    "DataBoxEdgeSkuList": {
+      "required__added": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "x-ms-identifiers__deleted": [
+            "name",
+            "resourceType"
+          ]
+        }
+      }
+    },
+    "DeviceCapacityInfo": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "DeviceCapacityRequestInfoProperties": {
+      "properties": {
+        "vmPlacementQuery": {
+          "items": {
+            "uniqueItems__deleted": false
+          }
+        }
+      }
+    },
+    "DiagnosticProactiveLogCollectionSettings": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "DiagnosticRemoteSupportSettings": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "FileEventTrigger": {
+      "x-ms-discriminator-value__deleted": "FileEvent",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "FileEvent"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "GenerateCertResponse": {
+      "properties": {
+        "privateKey": {
+          "x-ms-secret__deleted": true
+        }
+      }
+    },
+    "IoTAddon": {
+      "x-ms-discriminator-value__deleted": "IotEdge",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "IotEdge"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "IoTRole": {
+      "x-ms-discriminator-value__deleted": "IOT",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "IOT"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "Job": {
+      "allOf__added": [
+        {
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+        }
+      ],
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "properties": {
+          "readOnly__deleted": true
+        }
+      }
+    },
+    "KubernetesRole": {
+      "x-ms-discriminator-value__deleted": "Kubernetes",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "Kubernetes"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "MECRole": {
+      "x-ms-discriminator-value__deleted": "MEC",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "MEC"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "MonitoringMetricConfiguration": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "MonitoringMetricConfigurationList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "NetworkAdapter": {
+      "properties": {
+        "rdmaStatus": {
+          "x-ms-enum": {
+            "name": {
+              "__old": "NetworkAdapterRDMAStatus",
+              "__new": "NetworkAdapterRdmaStatus"
+            }
+          }
+        },
+        "dhcpStatus": {
+          "x-ms-enum": {
+            "name": {
+              "__old": "NetworkAdapterDHCPStatus",
+              "__new": "NetworkAdapterDhcpStatus"
+            }
+          }
+        }
+      }
+    },
+    "NetworkSettings": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        },
+        "properties": {
+          "readOnly__deleted": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "NodeList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "Order": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "OrderList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "PeriodicTimerEventTrigger": {
+      "x-ms-discriminator-value__deleted": "PeriodicTimerEvent",
+      "properties": {
+        "id__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "type__deleted": {
+          "type": "string",
+          "readOnly": true
+        },
+        "kind__added": {
+          "type": "string",
+          "enum": [
+            "PeriodicTimerEvent"
+          ],
+          "x-ms-enum": {
+            "modelAsString": false
+          }
+        }
+      }
+    },
+    "Role": {
+      "discriminator__deleted": "kind",
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        },
+        "properties__added": {
+          "type": "object",
+          "x-ms-client-flatten": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "RoleList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "Share": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "ShareList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "StorageAccount": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "StorageAccountCredential": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "StorageAccountCredentialList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "StorageAccountList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "Trigger": {
+      "discriminator__deleted": "kind",
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        },
+        "properties__added": {
+          "type": "object",
+          "x-ms-client-flatten": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "TriggerList": {
+      "required__added": [
+        "value"
+      ]
+    },
+    "UpdateSummary": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "User": {
+      "properties": {
+        "systemData__deleted": {
+          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/systemData",
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        [
+          "~",
+          {
+            "$ref": {
+              "__old": "#/definitions/ARMBaseModel",
+              "__new": "../../../../../common-types/resource-management/v3/types.json#/definitions/ProxyResource"
+            }
+          }
+        ]
+      ]
+    },
+    "UserList": {
+      "required__added": [
+        "value"
+      ]
+    }
+  }
+}
