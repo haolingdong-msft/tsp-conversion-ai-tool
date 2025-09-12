@@ -7,7 +7,7 @@ A Model Context Protocol (MCP) server that provides AI-powered tools for TypeSpe
 ### Prerequisites
 
 - Node.js (v16 or higher)
-- VS Code with Claude Dev extension
+- VS Code Github Copilot extension
 - TypeScript compiler
 
 ### Installation
