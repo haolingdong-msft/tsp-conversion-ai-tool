@@ -37,6 +37,15 @@ async function testMCPServer() {
     // Test listing tools
     const tools = await client.listTools();
     console.log("✅ Available tools:", tools.tools.map(t => t.name));
+    
+    // Verify both tools are available
+    const expectedTools = ["swagger-semantic-diff-analyze", "tsmv-run"];
+    expectedTools.forEach(toolName => {
+      if (!tools.tools.find(t => t.name === toolName)) {
+        throw new Error(`Expected tool '${toolName}' not found`);
+      }
+    });
+    console.log("✅ All expected tools are available");
 
     // Test getting the specific prompt
     const prompt = await client.getPrompt("swagger-functional-equivalence-analysis", {
@@ -52,7 +61,7 @@ async function testMCPServer() {
     console.log("Prompt content length:", prompt.messages[0].content.text.length);
 
     // Test the new tool
-    const toolResult = await client.callTool("get-swagger-analysis-instructions", {
+    const toolResult = await client.callTool("swagger-semantic-diff-analyze", {
       service_name: "Azure CDN",
       api_version: "2023-05-01",
       old_swagger_path: "../cdn/oldNormalizedSwagger.json",
@@ -62,6 +71,19 @@ async function testMCPServer() {
     
     console.log("✅ Tool call successful");
     console.log("Tool result content length:", toolResult.content[0].text.length);
+
+    // Test the new tsmv tool (with example paths - this won't actually run since the paths don't exist)
+    try {
+      console.log("Testing tsmv tool (this will fail gracefully with invalid paths)...");
+      const tsmvResult = await client.callTool("tsmv-run", {
+        original_openapi_folder: "C:\\workspace\\azure-rest-api-specs\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\old",
+        generated_openapi_file: "C:\\workspace\\azure-rest-api-specs\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\openapi.json",
+        output_folder: "C:\\workspace\\azure-rest-api-specs\\specification\\databoxedge\\DataBoxEdge.Management\\diff-output"
+      });
+      console.log("✅ TSMV tool call completed (unexpected success)");
+    } catch (tsmvError) {
+      console.log("✅ TSMV tool call failed as expected (invalid paths):", tsmvError.message);
+    }
 
     await client.close();
     serverProcess.kill();

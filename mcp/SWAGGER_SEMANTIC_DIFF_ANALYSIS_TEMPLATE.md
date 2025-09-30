@@ -33,9 +33,44 @@
 
 **Complete List ([X] cases):**
 [Lines X-Y in API_CHANGES.md](API_CHANGES.md#LX-LY)
-- [Bullet point of affected areas, if it is path change, add operationId value, operation_id example: "operationId": "EdgeNodes_List", so operationId value would be 'EdgeNodes_List']
+- [Bullet point of affected areas: if it is path change, add operationId value, operation_id example: "operationId": "EdgeNodes_List", so operationId value would be 'EdgeNodes_List', list all operationIds]
 - [Additional affected areas]
 
+
+Some examples for "Complete List":
+```
+**Complete List (9 cases):**
+- Path `/roles/{roleName}/addons` deleted, `/roles/{name}/addons` added (operationId: 'Addons_ListByRole')
+- Path `/roles/{roleName}/addons/{addonName}` deleted, `/roles/{name}/addons/{addonName}` added (operationId: 'Addons_Get', 'Addons_Delete', 'Addons_CreateOrUpdate')
+- Path `/roles/{roleName}/monitoringConfig` deleted, `/roles/{name}/monitoringConfig` added (operationId: 'MonitoringConfig_List')
+- Path `/roles/{roleName}/monitoringConfig/default` deleted, `/roles/{name}/monitoringConfig/default` added (operationId: 'MonitoringConfig_Get', 'MonitoringConfig_CreateOrUpdate', 'MonitoringConfig_Delete')
+```
+
+```
+**Complete List (6 cases):**
+- 3 discriminator properties removed (AModel, BModel, CModel)
+- 3 x-ms-discriminator-value extensions removed from derived types (AModel, BModel, CModel)
+```
+
+```
+**Complete List (7 cases):**
+- 3 resource model base reference changes from `ARMBaseModel` to `ProxyResource` (Addon, Alert, BandwidthSchedule)
+- 3 error response reference changes from `CloudError` to `ErrorResponse` (AModel, BModel, CModel)
+```
+
+```
+**Complete List (7 cases):**
+- 1 operations list reference change from `OperationsList` to `OperationListResult` (operationId: 'Operations_list')
+```
+
+```
+**Complete List (2 cases):**
+- Location headers removed from 202 responses for operations: canMigrate(operationId: 'Profiles_CanMigrate', actions: PATCH/PUT)
+
+```
+
+**GitHub Fix commit links:**
+[you must have this section, but leave the content empty]
 
 ---
 
@@ -57,6 +92,9 @@
 
 **Complete List ([X] cases):**
 [Lines X-Y in API_CHANGES.md](API_CHANGES.md#LX-LY)
+
+**GitHub Fix commit links:**
+[you must have this section, but leave the content empty]
 
 ---
 

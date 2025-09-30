@@ -13,10 +13,15 @@ import {
 import { promises as fs } from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import { exec } from "child_process";
+import { promisify } from "util";
 
 // Get __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Promisify exec for async/await usage
+const execAsync = promisify(exec);
 
 // Server configuration
 const server = new Server(
@@ -47,6 +52,21 @@ async function readTemplateFiles() {
   }
 }
 
+// Read TypeSpec fix template and instruction files
+async function readTypeSpecFixTemplateFiles() {
+  const templatePath = path.join(__dirname, "..", "TYPESPEC_FIX_TEMPLATE.md");
+  const instructionsPath = path.join(__dirname, "..", "prompts_tsp_fix.md");
+  
+  try {
+    const template = await fs.readFile(templatePath, "utf8");
+    const instructions = await fs.readFile(instructionsPath, "utf8");
+    return { template, instructions };
+  } catch (error) {
+    console.error("Error reading TypeSpec fix template files:", error);
+    throw error;
+  }
+}
+
 // List available tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
@@ -72,6 +92,59 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             api_changes_path: {
               type: "string",
               description: "Path to the API_CHANGES.md file (optional, defaults to placeholder)",
+            },
+          },
+          additionalProperties: false,
+        },
+      },
+      {
+        name: "tsp-compile-tsmv",
+        description: "Run TSP compile and TypeSpec Migration Validator (tsmv) to compare original OpenAPI folder with generated OpenAPI file",
+        inputSchema: {
+          type: "object",
+          properties: {
+            typespec_project_path: {
+              type: "string",
+              description: "Path to the TypeSpec project folder, usually named xxx.Management",
+            },
+            original_openapi_folder: {
+              type: "string",
+              description: "Path to the original OpenAPI folder containing the swagger files in sparse-spec, e.g.C:\\workspace\\azure-rest-api-specs\\sparse-spec\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\",
+            },
+            generated_openapi_file: {
+              type: "string", 
+              description: "Path to the generated OpenAPI file to compare against, e.g.C:\\workspace\\azure-rest-api-specs\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\databoxedge.json",
+            },
+            output_folder: {
+              type: "string",
+              description: "Path to the output folder where tsmv results will be saved",
+            },
+          },
+          required: ["typespec_project_path", "original_openapi_folder", "generated_openapi_file", "output_folder"],
+          additionalProperties: false,
+        },
+      },
+      {
+        name: "fix-typespec-for-backward-compatible",
+        description: "Fix TypeSpec forums to make the generated swagger functionally equivalent to the original swagger",
+        inputSchema: {
+          type: "object",
+          properties: {
+            typespec_project_path: {
+              type: "string",
+              description: "Path to the TypeSpec project directory containing .tsp files and tspconfig.yaml file",
+            },
+            old_swagger_path: {
+              type: "string",
+              description: "Path to the original swagger file for reference, it is under diff-output folder, usually named oldNormalizedSwagger.json",
+            },
+            new_swagger_path: {
+              type: "string",
+              description: "Path to the generated swagger file from TypeSpec, it is under diff-output folder, usually named newNormalizedSwagger.json",
+            },
+            swagger_semantic_diff_analysis_path: {
+              type: "string",
+              description: "Path to the SWAGGER_SEMANTIC_DIFF_ANALYSIS.md file with categorized differences, it is under diff-output folder, usually named SWAGGER_SEMANTIC_DIFF_ANALYSIS.md",
             },
           },
           additionalProperties: false,
@@ -129,6 +202,157 @@ Use this template and follow these instructions to create a comprehensive semant
           {
             type: "text",
             text: `Error generating swagger analysis instructions: ${errorMessage}`,
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+
+  if (name === "tsp-compile-tsmv") {
+    try {
+      // Extract required parameters
+      const typespecProjectPath = args?.typespec_project_path as string;
+      const originalFolder = args?.original_openapi_folder as string;
+      const generatedFile = args?.generated_openapi_file as string;
+      const outputFolder = args?.output_folder as string;
+
+      if (!typespecProjectPath || !originalFolder || !generatedFile || !outputFolder) {
+        throw new Error("Missing required parameters: typespec_project_path, original_openapi_folder, generated_openapi_file, and output_folder are all required");
+      }
+
+      let result = `TSMV execution with TypeSpec compilation started.\n\n`;
+
+      // Step 1: Compile TypeSpec project
+      result += `Step 1: Compiling TypeSpec project at: ${typespecProjectPath}\n`;
+      const compileCommand = `cd "${typespecProjectPath}" && tsp compile .`;
+      
+      console.error(`Running TypeSpec compile command: ${compileCommand}`);
+      
+      try {
+        const { stdout: compileStdout, stderr: compileStderr } = await execAsync(compileCommand);
+        result += `TypeSpec compilation completed successfully.\n\n`;
+        
+        if (compileStdout) {
+          result += `Compile STDOUT:\n${compileStdout}\n\n`;
+        }
+        
+        if (compileStderr) {
+          result += `Compile STDERR:\n${compileStderr}\n\n`;
+        }
+      } catch (compileError) {
+        const compileErrorMessage = compileError instanceof Error ? compileError.message : String(compileError);
+        result += `TypeSpec compilation failed: ${compileErrorMessage}\n\n`;
+        // Continue with TSMV even if compilation fails, as user might want to see validation results
+      }
+
+      // Step 2: Run TSMV
+      result += `Step 2: Running TSMV validation\n`;
+      const tsmvCommand = `npx tsmv "${originalFolder}" "${generatedFile}" --outputFolder "${outputFolder}"`;
+      
+      console.error(`Running tsmv command: ${tsmvCommand}`);
+      
+      // Execute the TSMV command
+      const { stdout, stderr } = await execAsync(tsmvCommand);
+      
+      result += `TSMV validation completed successfully.\n\n`;
+      result += `Command: ${tsmvCommand}\n\n`;
+      
+      if (stdout) {
+        result += `TSMV STDOUT:\n${stdout}\n\n`;
+      }
+      
+      if (stderr) {
+        result += `TSMV STDERR:\n${stderr}\n\n`;
+      }
+      
+      result += `Output saved to: ${outputFolder}`;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: result,
+          },
+        ],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Error running tsmv: ${errorMessage}`,
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+
+  if (name === "fix-typespec-for-backward-compatible") {
+    try {
+      const { template, instructions } = await readTypeSpecFixTemplateFiles();
+      
+      // Extract parameters with defaults
+      const typespecProjectPath = (args?.typespec_project_path as string) || "[TypeSpec Project Path]";
+      const oldSwaggerPath = (args?.old_swagger_path as string) || "[Original Swagger Path]";
+      const newSwaggerPath = (args?.new_swagger_path as string) || "[Generated Swagger Path]";
+      const swaggerDiffAnalysisPath = (args?.swagger_semantic_diff_analysis_path as string) || "[Swagger Diff Analysis Path]";
+      const currentDate = new Date().toISOString().split('T')[0];
+
+      // Get list of TypeSpec files if project path is provided and valid
+      let typespecFilesList = "[TypeSpec Files List]";
+      if (typespecProjectPath !== "[TypeSpec Project Path]") {
+        try {
+          const entries = await fs.readdir(typespecProjectPath, { withFileTypes: true });
+          const tspFiles = entries
+            .filter(entry => entry.isFile() && entry.name.endsWith('.tsp'))
+            .map(entry => `- ${entry.name}`)
+            .join('\n');
+          if (tspFiles) {
+            typespecFilesList = tspFiles;
+          }
+        } catch (error) {
+          // If we can't read the directory, use the placeholder
+          console.error(`Warning: Could not read TypeSpec project directory: ${error}`);
+        }
+      }
+
+      // Create the customized template with provided arguments
+      let customizedTemplate = template
+        .replace(/\[TypeSpec Project Path\]/g, typespecProjectPath)
+        .replace(/\[Swagger Diff Analysis Path\]/g, swaggerDiffAnalysisPath)
+        .replace(/\[Original Swagger Path\]/g, oldSwaggerPath)
+        .replace(/\[Generated Swagger Path\]/g, newSwaggerPath)
+        .replace(/\[Date\]/g, currentDate)
+        .replace(/\[TypeSpec Files List\]/g, typespecFilesList);
+
+      const fullInstructions = `# TypeSpec Backward Compatibility Fix Instructions
+
+## Instructions
+${instructions}
+
+## Fix Template
+${customizedTemplate}
+
+Use this template and follow these instructions to create comprehensive TypeSpec fixes for backward compatibility.`;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: fullInstructions,
+          },
+        ],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Error generating TypeSpec fix instructions: ${errorMessage}`,
           },
         ],
         isError: true,
