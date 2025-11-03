@@ -41,28 +41,43 @@ const server = new Server(
 async function readTemplateFiles() {
   const templatePath = path.join(__dirname, "..", "SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md");
   const instructionsPath = path.join(__dirname, "..", "prompts.md");
+  const scriptPath = path.join(__dirname, "..", "count-api-changes-items.ps1");
   
   try {
     const template = await fs.readFile(templatePath, "utf8");
     const instructions = await fs.readFile(instructionsPath, "utf8");
-    return { template, instructions };
+    const scriptContent = await fs.readFile(scriptPath, "utf8");
+    return { template, instructions, scriptContent };
   } catch (error) {
     console.error("Error reading template files:", error);
     throw error;
   }
 }
 
-// Read TypeSpec fix template and instruction files
-async function readTypeSpecFixTemplateFiles() {
+// Read TypeSpec fix template and instruction files for generating report
+async function readTypeSpecFixGenerateTemplateFiles() {
   const templatePath = path.join(__dirname, "..", "TYPESPEC_FIX_TEMPLATE.md");
-  const instructionsPath = path.join(__dirname, "..", "prompts_tsp_fix.md");
+  const instructionsPath = path.join(__dirname, "..", "prompts_tsp_fix_generate.md");
   
   try {
     const template = await fs.readFile(templatePath, "utf8");
     const instructions = await fs.readFile(instructionsPath, "utf8");
     return { template, instructions };
   } catch (error) {
-    console.error("Error reading TypeSpec fix template files:", error);
+    console.error("Error reading TypeSpec fix generate template files:", error);
+    throw error;
+  }
+}
+
+// Read TypeSpec fix template and instruction files for applying fixes
+async function readTypeSpecFixApplyTemplateFiles() {
+  const instructionsPath = path.join(__dirname, "..", "prompts_tsp_fix_apply.md");
+  
+  try {
+    const instructions = await fs.readFile(instructionsPath, "utf8");
+    return { instructions };
+  } catch (error) {
+    console.error("Error reading TypeSpec fix apply template files:", error);
     throw error;
   }
 }
@@ -71,32 +86,6 @@ async function readTypeSpecFixTemplateFiles() {
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
-      {
-        name: "swagger-semantic-diff-analyze",
-        description: "Analyze semantic diff between two swagger files",
-        inputSchema: {
-          type: "object",
-          properties: {
-            service_name: {
-              type: "string",
-              description: "Name of the service being analyzed (optional, defaults to placeholder)",
-            },
-            old_swagger_path: {
-              type: "string",
-              description: "Path to the old normalized swagger file (optional, defaults to placeholder)",
-            },
-            new_swagger_path: {
-              type: "string",
-              description: "Path to the new normalized swagger file (optional, defaults to placeholder)",
-            },
-            api_changes_path: {
-              type: "string",
-              description: "Path to the API_CHANGES.md file (optional, defaults to placeholder)",
-            },
-          },
-          additionalProperties: false,
-        },
-      },
       {
         name: "tsp-compile-tsmv",
         description: "Run TSP compile and TypeSpec Migration Validator (tsmv) to compare original OpenAPI folder with generated OpenAPI file",
@@ -109,11 +98,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             },
             original_openapi_folder: {
               type: "string",
-              description: "Path to the original OpenAPI folder containing the swagger files in sparse-spec, e.g.C:\\workspace\\azure-rest-api-specs\\sparse-spec\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\",
+              description: "Path to the original OpenAPI folder containing the swagger files in *sparse-spec*, e.g.C:\\workspace\\azure-rest-api-specs\\sparse-spec\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\",
             },
             generated_openapi_file: {
               type: "string", 
-              description: "Path to the generated OpenAPI file to compare against, e.g.C:\\workspace\\azure-rest-api-specs\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\databoxedge.json",
+              description: "Path to the generated OpenAPI file to compare against under api-version folder, NOT tsp-output folder, e.g.C:\\workspace\\azure-rest-api-specs\\specification\\databoxedge\\resource-manager\\Microsoft.DataBoxEdge\\stable\\2023-12-01\\databoxedge.json",
             },
             output_folder: {
               type: "string",
@@ -125,8 +114,35 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "fix-typespec-for-backward-compatible",
-        description: "Fix TypeSpec forums to make the generated swagger functionally equivalent to the original swagger",
+        name: "swagger-semantic-diff-analyze",
+        description: "Get comprehensive instructions and template for creating a swagger semantic diff analysis summary",
+        inputSchema: {
+          type: "object",
+          properties: {
+            service_name: {
+              type: "string",
+              description: "Name of the service being analyzed (optional, defaults to placeholder)",
+            },
+            old_swagger_path: {
+              type: "string",
+              description: "Path to the oldNormalizedSwagger.json, usually under `diff-output` folder",
+            },
+            new_swagger_path: {
+              type: "string",
+              description: "Path to the newNormalizedSwagger.json, usually under `diff-output` folder",
+            },
+            api_changes_path: {
+              type: "string",
+              description: "Path to the API_CHANGES.md file, usually under `diff-output` folder",
+            },
+          },
+          required: ["old_swagger_path", "new_swagger_path", "api_changes_path"],
+          additionalProperties: false,
+        },
+      },
+      {
+        name: "generate-typespec-fix-report",
+        description: "Analyze swagger diffs and generate a comprehensive fix report (TSP_FIX.diff) with proposed TypeSpec changes to make generated swagger functionally equivalent to original swagger",
         inputSchema: {
           type: "object",
           properties: {
@@ -147,6 +163,22 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               description: "Path to the SWAGGER_SEMANTIC_DIFF_ANALYSIS.md file with categorized differences, it is under diff-output folder, usually named SWAGGER_SEMANTIC_DIFF_ANALYSIS.md",
             },
           },
+          required: [],
+          additionalProperties: false,
+        },
+      },
+      {
+        name: "apply-typespec-fixes",
+        description: "Apply TypeSpec fixes from TSP_FIX.diff report one category at a time with user confirmation, compile and validate after each fix",
+        inputSchema: {
+          type: "object",
+          properties: {
+            tsp_fix_diff_path: {
+              type: "string",
+              description: "Path to the TSP_FIX.diff file containing proposed fixes, usually under diff-output folder",
+            },
+          },
+          required: ["tsp_fix_diff_path"],
           additionalProperties: false,
         },
       },
@@ -154,60 +186,22 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
+// List available prompts
+server.setRequestHandler(ListPromptsRequestSchema, async () => {
+  return {
+    prompts: [],
+  };
+});
+
+// Handle prompt requests
+server.setRequestHandler(GetPromptRequestSchema, async (request: GetPromptRequest) => {
+  const { name } = request.params;
+  throw new Error(`Unknown prompt: ${name}`);
+});
+
 // Handle tool calls
 server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
   const { name, arguments: args } = request.params;
-
-  if (name === "swagger-semantic-diff-analyze") {
-    try {
-      const { template, instructions } = await readTemplateFiles();
-      
-      // Extract parameters with defaults
-      const serviceName = (args?.service_name as string) || "[Service Name]";
-      const apiVersion = (args?.api_version as string) || "[X.X.X]";
-      const oldSwaggerPath = (args?.old_swagger_path as string) || "[path/to/old/swagger]";
-      const newSwaggerPath = (args?.new_swagger_path as string) || "[path/to/new/swagger]";
-      const apiChangesPath = (args?.api_changes_path as string) || "[path/to/changes]";
-
-      // Create the customized template with provided arguments
-      let customizedTemplate = template
-        .replace(/\[Service Name\]/g, serviceName)
-        .replace(/\[X\.X\.X\]/g, apiVersion)
-        .replace(/\[path\/to\/old\/swagger\]/g, oldSwaggerPath)
-        .replace(/\[path\/to\/new\/swagger\]/g, newSwaggerPath)
-        .replace(/\[path\/to\/changes\]/g, apiChangesPath);
-
-      const fullInstructions = `# Swagger Semantic Diff Analysis Instructions
-
-## Instructions
-${instructions}
-
-## Analysis Template
-${customizedTemplate}
-
-Use this template and follow these instructions to create a comprehensive semantic diff analysis.`;
-
-      return {
-        content: [
-          {
-            type: "text",
-            text: fullInstructions,
-          },
-        ],
-      };
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Error generating swagger analysis instructions: ${errorMessage}`,
-          },
-        ],
-        isError: true,
-      };
-    }
-  }
 
   if (name === "tsp-compile-tsmv") {
     try {
@@ -290,9 +284,70 @@ Use this template and follow these instructions to create a comprehensive semant
     }
   }
 
-  if (name === "fix-typespec-for-backward-compatible") {
+  if (name === "swagger-semantic-diff-analyze") {
     try {
-      const { template, instructions } = await readTypeSpecFixTemplateFiles();
+      const { template, instructions, scriptContent } = await readTemplateFiles();
+      
+      // Extract parameters with defaults
+      const serviceName = (args?.service_name as string) || "[Service Name]";
+      const apiVersion = (args?.api_version as string) || "[X.X.X]";
+      const oldSwaggerPath = (args?.old_swagger_path as string) || "[path/to/old/swagger]";
+      const newSwaggerPath = (args?.new_swagger_path as string) || "[path/to/new/swagger]";
+      const apiChangesPath = (args?.api_changes_path as string) || "[path/to/changes]";
+
+      // Create the customized template with provided arguments
+      let customizedTemplate = template
+        .replace(/\[Service Name\]/g, serviceName)
+        .replace(/\[X\.X\.X\]/g, apiVersion)
+        .replace(/\[path\/to\/old\/swagger\]/g, oldSwaggerPath)
+        .replace(/\[path\/to\/new\/swagger\]/g, newSwaggerPath)
+        .replace(/\[path\/to\/changes\]/g, apiChangesPath);
+
+
+        const fullInstructions = `# Swagger Semantic Diff Analysis Instructions
+
+        
+## API Changes Counting Script
+The following PowerShell script should be used to count total diff items in API_CHANGES.md:
+
+\`\`\`powershell
+${scriptContent}
+\`\`\`
+
+## Instructions
+${instructions}
+
+
+## Analysis Template
+${customizedTemplate}
+
+Use this template and follow these instructions to create a comprehensive semantic diff analysis.`;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: fullInstructions,
+          },
+        ],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Error generating swagger analysis instructions: ${errorMessage}`,
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+
+  if (name === "generate-typespec-fix-report") {
+    try {
+      const { template, instructions } = await readTypeSpecFixGenerateTemplateFiles();
       
       // Extract parameters with defaults
       const typespecProjectPath = (args?.typespec_project_path as string) || "[TypeSpec Project Path]";
@@ -328,15 +383,15 @@ Use this template and follow these instructions to create a comprehensive semant
         .replace(/\[Date\]/g, currentDate)
         .replace(/\[TypeSpec Files List\]/g, typespecFilesList);
 
-      const fullInstructions = `# TypeSpec Backward Compatibility Fix Instructions
+      const fullInstructions = `# TypeSpec Fix Report Generation
 
 ## Instructions
 ${instructions}
 
-## Fix Template
+## Fix Report Template
 ${customizedTemplate}
 
-Use this template and follow these instructions to create comprehensive TypeSpec fixes for backward compatibility.`;
+Use this template and follow these instructions to analyze all swagger diffs and generate a comprehensive TSP_FIX.diff report with proposed fixes.`;
 
       return {
         content: [
@@ -352,7 +407,46 @@ Use this template and follow these instructions to create comprehensive TypeSpec
         content: [
           {
             type: "text",
-            text: `Error generating TypeSpec fix instructions: ${errorMessage}`,
+            text: `Error generating TypeSpec fix report instructions: ${errorMessage}`,
+          },
+        ],
+        isError: true,
+      };
+    }
+  }
+
+  if (name === "apply-typespec-fixes") {
+    try {
+      const { instructions } = await readTypeSpecFixApplyTemplateFiles();
+      
+      // Extract parameter
+      const tspFixDiffPath = (args?.tsp_fix_diff_path as string) || "[TSP_FIX.diff Path]";
+
+      const fullInstructions = `# Apply TypeSpec Fixes
+
+## Fix Report
+- Fix Report: ${tspFixDiffPath}
+
+## Instructions
+${instructions}
+
+Follow these instructions to apply the fixes from TSP_FIX.diff one category at a time with user confirmation.`;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: fullInstructions,
+          },
+        ],
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Error generating TypeSpec fix application instructions: ${errorMessage}`,
           },
         ],
         isError: true,
