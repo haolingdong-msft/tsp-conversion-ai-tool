@@ -142,7 +142,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "generate-typespec-fix-report",
-        description: "Analyze swagger diffs and generate a comprehensive fix report (TSP_FIX.diff) with proposed TypeSpec changes to make generated swagger functionally equivalent to original swagger",
+        description: "Depends on running swagger-semantic-diff-analyze tool to generate SWAGGER_SEMANTIC_DIFF_ANALYSIS report first. Analyze swagger diffs and generate a comprehensive fix report (TSP_FIX.diff) with proposed TypeSpec changes to make generated swagger functionally equivalent to original swagger",
         inputSchema: {
           type: "object",
           properties: {
@@ -169,7 +169,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "apply-typespec-fixes",
-        description: "Apply TypeSpec fixes from TSP_FIX.diff report one category at a time with user confirmation, compile and validate after each fix",
+        description: "Depends on running generate-typespec-fix-report to generate TSP_FIX.diff report. Apply TypeSpec fixes from TSP_FIX.diff report one category at a time with user confirmation, compile and validate after each fix",
         inputSchema: {
           type: "object",
           properties: {
@@ -310,7 +310,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
 ## API Changes Counting Script
 The following PowerShell script should be used to count total diff items in API_CHANGES.md:
 
-\`\`\`powershell
+\`\`\`powershell count-api-changes-items.ps1
 ${scriptContent}
 \`\`\`
 

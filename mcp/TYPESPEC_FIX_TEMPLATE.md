@@ -41,7 +41,7 @@ Then for EACH category, append:
 # Proposed Solution:
 # [Detailed solution based on TSG]
 #
-# TSG Reference: [Link or reference]
+# TSG Reference: [Github commit Link or document reference link]
 #
 # ----------------------------------------------------------------------------
 # Fix for Case: [Case description]
@@ -62,3 +62,150 @@ Then for EACH category, append:
 # ----------------------------------------------------------------------------
 # [Repeat for each case in this category]
 # ----------------------------------------------------------------------------
+
+# IMPORTANT NOTES:
+# - If this category affects multiple operations/models (e.g., "all 81 operations"), 
+#   provide COMPLETE ENUMERATION or a CLEAR SEARCH PATTERN to find all locations
+# - Include specific examples showing the fix pattern for different operation types:
+#   * ArmListOperations
+#   * ArmResourceRead
+#   * ArmResourceCreateOrReplaceAsync
+#   * ArmResourceDeleteAsync
+#   * Custom operations
+# - For pattern-based fixes, provide a grep/search pattern to find all instances
+# - List all affected files and interfaces/models explicitly if feasible
+# ============================================================================
+# EXAMPLES: 
+# ============================================================================
+#
+# ----------------------------------------------------------------------------
+# Example 2: Verified Match - NO FIX NEEDED
+# ----------------------------------------------------------------------------
+# Category: SystemData Migration
+#
+# Property Verification:
+# Old model 'SystemData' (4 properties):
+#   - createdBy: string (optional)
+#   - createdAt: string/date-time (optional)
+#   - lastModifiedBy: string (optional)
+#   - lastModifiedAt: string/date-time (optional)
+#
+# New model 'SystemData' from common-types/v3 (4 properties):
+#   - createdBy: string (optional, readOnly: true)
+#   - createdAt: string/date-time (optional, readOnly: true)
+#   - lastModifiedBy: string (optional, readOnly: true)
+#   - lastModifiedAt: string/date-time (optional, readOnly: true)
+#
+# Differences Found:
+#   - ReadOnly constraint added (acceptable - strengthening only)
+#
+# Decision: ⚠️ NO FIX NEEDED - Standard common-types migration pattern
+#
+# ----------------------------------------------------------------------------
+# Example 4: Parent Resource Hierarchy Fix
+# ----------------------------------------------------------------------------
+# Category: API Path Restructuring - Resource Hierarchy
+#
+# Analysis:
+# API paths changed from device-scoped (/devices/{deviceName}/addons) 
+# to role-scoped (/devices/{deviceName}/roles/{roleName}/addons).
+# This indicates the resource hierarchy needs correction.
+#
+# Root Cause:
+# Model definition is missing @parentResource decorator to establish correct hierarchy.
+#
+#
+# Proposed Solution:
+# Add @parentResource(Role) to the Addon model definition.
+# The interface operations will automatically inherit the correct path structure.
+#
+# --- a/Addon.tsp
+# +++ b/Addon.tsp
+# @@ -1,6 +1,8 @@
+#  import "@azure-tools/typespec-azure-core";
+#  import "@azure-tools/typespec-azure-resource-manager";
+#  
+# +@parentResource(Role)
+#  model Addon is ProxyResource<AddonProperties> {
+#    @key("addonName")
+#    @path
+#    @doc("The addon name.")
+#    name: string;
+#  }
+#
+# // Interface definition remains clean - no @parentResource needed here
+# interface Addons {
+#   listByRole is ArmResourceListByParent<Addon>;
+#   get is ArmResourceRead<Addon>;
+#   createOrUpdate is ArmResourceCreateOrReplaceAsync<Addon>;
+#   delete is ArmResourceDeleteAsync<Addon>;
+# }
+#
+# TSG Reference: 
+# https://github.com/Azure/azure-rest-api-specs/blob/78fd8f85507c9a12d47bd8953b864353a6005080/specification/databoxedge/DataBoxEdge.Management/Addon.tsp#L20
+# "use @parentResource on model to update path to add a segment"
+#
+# ----------------------------------------------------------------------------
+# Example 5: Error Model Migration - CloudError vs ErrorResponse
+# ----------------------------------------------------------------------------
+# Category: Common Types Migration - Error Models
+#
+# Analysis:
+# Error response models migrated from custom CloudError/CloudErrorBody to common-types ErrorResponse.
+# This is a MODEL NAME CHANGE which is ALWAYS a breaking change, even though both represent errors.
+#
+# Property Verification:
+# Old model 'CloudError' properties:
+#   - error: object (CloudErrorBody, optional)
+#
+# Old model 'CloudErrorBody' properties (nested):
+#   - code: string (optional)
+#   - message: string (optional)
+#   - details: array of CloudErrorBody (optional)
+#
+# New model 'ErrorResponse' from common-types/v3 properties:
+#   - error: object (ErrorDetail, optional)
+#
+# New model 'ErrorDetail' from common-types/v3 properties (nested):
+#   - code: string (optional, readOnly: true)
+#   - message: string (optional, readOnly: true)
+#   - target: string (optional, readOnly: true) ← NEW
+#   - details: array of ErrorDetail (optional, readOnly: true)
+#   - additionalInfo: array of ErrorAdditionalInfo (optional, readOnly: true) ← NEW
+#
+# Differences Found:
+#   1. Model name changed: CloudError → ErrorResponse ❌ BREAKING
+#   2. Nested model name changed: CloudErrorBody → ErrorDetail ❌ BREAKING
+#   3. ReadOnly constraints ADDED to all properties ❌ BREAKING
+#   4. New properties added: target, additionalInfo ❌ BREAKING (changes structure)
+#
+# Decision: ✅ REQUIRES FIX
+# Justification: Multiple breaking changes - model names changed, readOnly constraints added,
+#                and structure modified with new properties
+#
+# Root Cause:
+# TypeSpec using common-types ErrorResponse directly instead of defining custom error models
+# to match original CloudError schema. When ARM template operations default to common-types,
+# they automatically use ErrorResponse instead of preserving the original error model.
+#
+# Proposed Solution:
+# 4. Update ALL operation error responses to reference CloudError instead of ErrorResponse
+# IMPORTANT: update for ALL cases in this category to use CloudError 
+#
+# Example operation updates in routes.tsp:
+#
+# --- a/main.tsp
+# +++ b/main.tsp
+# @@ -48,10 +48,10 @@
+#  
+#  interface Operations extends Azure.ResourceManager.Operations {
+#    @doc("Get operations")
+# -  list is ArmListOperations<Operation>;
+# +  list is ArmListOperations<Operation, Response = ArmResponse<OperationListResult> | Error = CloudError>;
+#  }
+#  
+# TSG Reference: 
+# https://github.com/Azure/azure-rest-api-specs/blob/main/specification/databoxedge/DataBoxEdge.Management/models.tsp#L2065
+# https://github.com/Azure/typespec-azure/blob/main/docs/migrate-swagger/faq/common-types.md
+# https://github.com/Azure/azure-rest-api-specs/commit/5219e4b239d24251de80e326042bcf2dc63e53d3
+# "Define custom error models when original swagger used non-standard error formats"
