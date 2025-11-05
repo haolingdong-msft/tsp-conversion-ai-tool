@@ -59,12 +59,20 @@ With the following configuration:
 
 ### Usage
 
-Once configured, you can use the following AI prompts in Claude Dev:
+Once configured, you can use the following AI prompts:
 
-- **Analyze swagger semantic diff:**
   ```
   analyze swagger semantic diff for <service-name>
   ```
-  Add the diff-output folder to chat context for analysis.
+  The tool will provide comprehensive semantic diff analysis between old and new swagger specifications, categorizing changes and identifying their semantic impact during TypeSpec migrations.
+  ```
+  generate typespec fix report for <service-name>
+  ```
+  
+  The tool will generate fix report without updating code
 
-The tool will provide comprehensive semantic diff analysis between old and new swagger specifications, categorizing changes and identifying their semantic impact during TypeSpec migrations.
+  ```
+  apply typespec fix report for <service-name>
+  ```
+  The tool will update typespec code and ask you to commit
+

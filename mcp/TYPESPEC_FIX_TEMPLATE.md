@@ -189,23 +189,31 @@ Then for EACH category, append:
 # they automatically use ErrorResponse instead of preserving the original error model.
 #
 # Proposed Solution:
-# 4. Update ALL operation error responses to reference CloudError instead of ErrorResponse
-# IMPORTANT: update for ALL cases in this category to use CloudError 
+# CloudError model should already be defined in models.tsp (verify it exists).
+# Update ALL operation error responses using 'Error = CloudError' parameter.
 #
-# Example operation updates in routes.tsp:
-#
-# --- a/main.tsp
+# --- a/main.tsp (or other interface files)
 # +++ b/main.tsp
-# @@ -48,10 +48,10 @@
+# @@ -50,12 +50,24 @@
 #  
-#  interface Operations extends Azure.ResourceManager.Operations {
-#    @doc("Get operations")
-# -  list is ArmListOperations<Operation>;
-# +  list is ArmListOperations<Operation, Response = ArmResponse<OperationListResult> | Error = CloudError>;
+#  interface Devices {
+# -  get is ArmResourceRead<DataBoxEdgeDevice>;
+# +  get is ArmResourceRead<DataBoxEdgeDevice, Error = CloudError>;
+#    
+# -  createOrUpdate is ArmResourceCreateOrReplaceSync<Order>;
+# +  createOrUpdate is ArmResourceCreateOrReplaceSync<Order, Error = CloudError>;
+#    
+# -  delete is ArmResourceDeleteAsync<Container>;
+# +  delete is ArmResourceDeleteAsync<Container, Error = CloudError>;
+# +
 #  }
 #  
+#  interface Addons {
+# -  listByRole is ArmResourceListByParent<Addon>;
+# +  listByRole is ArmResourceListByParent<Addon, Error = CloudError>;
+#  }
+#
 # TSG Reference: 
-# https://github.com/Azure/azure-rest-api-specs/blob/main/specification/databoxedge/DataBoxEdge.Management/models.tsp#L2065
 # https://github.com/Azure/typespec-azure/blob/main/docs/migrate-swagger/faq/common-types.md
 # https://github.com/Azure/azure-rest-api-specs/commit/5219e4b239d24251de80e326042bcf2dc63e53d3
 # "Define custom error models when original swagger used non-standard error formats"
