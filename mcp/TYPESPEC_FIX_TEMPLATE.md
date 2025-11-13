@@ -15,15 +15,46 @@
 #
 # Category 1: [Category Name] ([X] changes)
 #   Decision: ✅ REQUIRES FIX | ⚠️ NO FIX NEEDED
-#   Reason: [Brief reason]
+#   Reason: [Brief reason - if NO FIX NEEDED, specify which category below it belongs to]
+#   Reference: [If NO FIX NEEDED, link to relevant section or "Non-semantic diff"]
 #
 # Category 2: [Category Name] ([X] changes)
 #   Decision: ✅ REQUIRES FIX | ⚠️ NO FIX NEEDED
-#   Reason: [Brief reason]
+#   Reason: [Brief reason - if NO FIX NEEDED, specify which category below it belongs to]
+#   Reference: [If NO FIX NEEDED, link to relevant section or "Non-semantic diff"]
 #
 # Category 3: [Category Name] ([X] changes)
 #   Decision: ✅ REQUIRES FIX | ⚠️ NO FIX NEEDED
-#   Reason: [Brief reason]
+#   Reason: [Brief reason - if NO FIX NEEDED, specify which category below it belongs to]
+#   Reference: [If NO FIX NEEDED, link to relevant section or "Non-semantic diff"]
+#
+# ----------------------------------------------------------------------------
+# DECISION CRITERIA FOR "⚠️ NO FIX NEEDED"
+# ----------------------------------------------------------------------------
+# If you decide NOT to fix a category, you MUST verify it belongs to one of these:
+#
+# 1. Using Resources from Common Types
+#    - Standard common-types migration (e.g., SystemData, ManagedServiceIdentity)
+#    - Properties functionally match (readOnly strengthening is acceptable)
+#    - Reference: https://azure.github.io/typespec-azure/docs/migrate-swagger/faq/mustread/#using-resources-from-common-types
+#
+# 2. Using Page Model from Library
+#    - Pagination model changes (value, nextLink structure preserved)
+#    - List operations using standard Azure.Core.Page<T>
+#    - Reference: https://azure.github.io/typespec-azure/docs/migrate-swagger/faq/mustread/#using-page-model-from-library
+#
+# 3. Handling 'readOnly' in Model Schemas
+#    - readOnly constraint added to properties (strengthening only, no removal/type changes)
+#    - Reference: https://azure.github.io/typespec-azure/docs/migrate-swagger/faq/mustread/#handling-readonly-in-model-schemas
+#
+# 4. Non-Semantic Diff
+#    - Model inlined: nested model flattened without property changes ('allOf' case)
+#    - Hierarchical structure change: model restructured but ALL properties preserved
+
+# For each "⚠️ NO FIX NEEDED" decision:
+#   - Specify which category (1-4) it belongs to
+#   - Provide verification details
+#   - Include reference link for categories 1-3
 #
 ```
 
@@ -37,6 +68,7 @@ Then for EACH category, append:
 #
 # Root Cause:
 # [Explain the root cause based on TSG analysis]
+# For model diffs, verify model properties recursively
 #
 # Proposed Solution:
 # [Detailed solution based on TSG]
@@ -79,7 +111,7 @@ Then for EACH category, append:
 # ============================================================================
 #
 # ----------------------------------------------------------------------------
-# Example 2: Verified Match - NO FIX NEEDED
+# Example 1: SystemData Migration - NO FIX NEEDED
 # ----------------------------------------------------------------------------
 # Category: SystemData Migration
 #
@@ -102,7 +134,7 @@ Then for EACH category, append:
 # Decision: ⚠️ NO FIX NEEDED - Standard common-types migration pattern
 #
 # ----------------------------------------------------------------------------
-# Example 4: Parent Resource Hierarchy Fix
+# Example 2: API Path Restructuring
 # ----------------------------------------------------------------------------
 # Category: API Path Restructuring - Resource Hierarchy
 #
@@ -146,7 +178,7 @@ Then for EACH category, append:
 # "use @parentResource on model to update path to add a segment"
 #
 # ----------------------------------------------------------------------------
-# Example 5: Error Model Migration - CloudError vs ErrorResponse
+# Example 3: Error Model Migration - CloudError vs ErrorResponse
 # ----------------------------------------------------------------------------
 # Category: Common Types Migration - Error Models
 #
@@ -180,8 +212,7 @@ Then for EACH category, append:
 #   4. New properties added: target, additionalInfo ❌ BREAKING (changes structure)
 #
 # Decision: ✅ REQUIRES FIX
-# Justification: Multiple breaking changes - model names changed, readOnly constraints added,
-#                and structure modified with new properties
+# Justification: Multiple breaking changes - model names changed, readOnly constraints added,and structure modified with new properties
 #
 # Root Cause:
 # TypeSpec using common-types ErrorResponse directly instead of defining custom error models
@@ -189,30 +220,19 @@ Then for EACH category, append:
 # they automatically use ErrorResponse instead of preserving the original error model.
 #
 # Proposed Solution:
-# CloudError model should already be defined in models.tsp (verify it exists).
-# Update ALL operation error responses using 'Error = CloudError' parameter.
+# Update ALL operation error responses to reference CloudError instead of ErrorResponse
+# IMPORTANT: update for ALL cases in this category to use CloudError, add 'Error = CloudError'
 #
-# --- a/main.tsp (or other interface files)
-# +++ b/main.tsp
-# @@ -50,12 +50,24 @@
-#  
-#  interface Devices {
-# -  get is ArmResourceRead<DataBoxEdgeDevice>;
-# +  get is ArmResourceRead<DataBoxEdgeDevice, Error = CloudError>;
-#    
-# -  createOrUpdate is ArmResourceCreateOrReplaceSync<Order>;
-# +  createOrUpdate is ArmResourceCreateOrReplaceSync<Order, Error = CloudError>;
-#    
-# -  delete is ArmResourceDeleteAsync<Container>;
-# +  delete is ArmResourceDeleteAsync<Container, Error = CloudError>;
-# +
-#  }
-#  
-#  interface Addons {
-# -  listByRole is ArmResourceListByParent<Addon>;
-# +  listByRole is ArmResourceListByParent<Addon, Error = CloudError>;
-#  }
-#
+# --- a/[specification/databoxedge/DataBoxEdge.Management/main.tsp]
+# +++ b/[specification/databoxedge/DataBoxEdge.Management/main.tsp]
+# @@ -61,4 +61,7 @@
+#  interface Operations
+# -  extends Azure.ResourceManager.Legacy.Operations<Error = CloudError> {}
+# +  extends Azure.ResourceManager.Legacy.Operations<
+# +    OperationsList,
+# +    Error = CloudError
+# +  > {}
+# 
 # TSG Reference: 
 # https://github.com/Azure/typespec-azure/blob/main/docs/migrate-swagger/faq/common-types.md
 # https://github.com/Azure/azure-rest-api-specs/commit/5219e4b239d24251de80e326042bcf2dc63e53d3
