@@ -1,0 +1,671 @@
+# TypeSpec Fix Plan - DataBox Edge
+# Generated: 2025-11-04
+# TypeSpec Project: c:\workspace\azure-rest-api-specs\specification\databoxedge\DataBoxEdge.Management
+# Analysis Source: SWAGGER_SEMANTIC_DIFF_ANALYSIS.md
+#
+# ============================================================================
+# OVERALL SUMMARY
+# ============================================================================
+#
+# Total Categories Analyzed: 21
+# Categories Requiring Fixes: 5
+# Categories with No Fix Needed: 16
+#
+# CATEGORY OVERVIEW:
+#
+# Category 1: API Path Restructuring - Addons and Monitoring Config (8 changes)
+#   Decision: ✅ REQUIRES FIX
+#   Reason: Breaking change - API paths changed from role-scoped to device-scoped endpoints
+#
+# Category 2: Security Settings Endpoint Consolidation (2 changes)
+#   Decision: ✅ REQUIRES FIX
+#   Reason: Breaking change - endpoint path structure changed
+#
+# Category 3: Service Description Added (1 change)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking addition of missing service description
+#
+# Category 4: Long Running Operation Headers Added (28 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking enhancement - Azure-AsyncOperation and Location headers added to LRO responses
+#
+# Category 5: Common Types Migration - Error Models (70 changes)
+#   Decision: ✅ REQUIRES FIX
+#   Reason: Model name changed (CloudError→ErrorResponse) - BREAKING CHANGE
+#
+# Category 6: Common Types Migration - Resource Base Models (22 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: ARMBaseModel→ProxyResource/TrackedResource migration - allowed exception with verified properties
+#
+# Category 7: Common Types Migration - Operations List Model (5 changes)
+#   Decision: ✅ REQUIRES FIX
+#   Reason: Model name changed (OperationsList→OperationListResult) and properties removed - BREAKING CHANGE
+#
+# Category 8: Custom Service Specification Models Removed (4 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Models were unused service-internal metadata, not part of API contract
+#
+# Category 9: SystemData Property Removed from Resources (20 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: SystemData now inherited from common-types base models (non-breaking)
+#
+# Category 10: Discriminator Pattern Updated for Polymorphic Types (19 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Modern TypeSpec discriminator pattern using inline kind enum (x-ms-discriminator-value removal allowed)
+#
+# Category 11: ARM Resource Properties Removed from Derived Types (27 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Properties now inherited from common-types base models (non-breaking)
+#
+# Category 12: Placeholder Properties Added to Base Polymorphic Types (3 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - placeholder properties added to maintain schema structure
+#
+# Category 13: Required Property Added to List Response Models (16 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - strengthening constraint (optional→required for 'value' array)
+#
+# Category 14: ReadOnly Attribute Removed from List and Properties (18 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - response-only models don't need explicit readOnly
+#
+# Category 15: Secret Properties x-ms-secret Extension Removed (2 changes)
+#   Decision: ✅ REQUIRES FIX
+#   Reason: x-ms-secret removal is ALWAYS breaking - SDKs won't treat properties as sensitive
+#
+# Category 16: x-ms-identifiers Extension Removed (3 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: x-ms-identifiers on primitive string arrays is not required
+#
+# Category 17: TrackedResource Properties Removed (2 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Properties now inherited from TrackedResource base model (non-breaking)
+#
+# Category 18: UniqueItems Attribute Removed (1 change)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - uniqueItems:false is redundant (default behavior)
+#
+# Category 19: Enum Name Case Normalization (2 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - enum type name normalization doesn't affect wire format or values
+#
+# Category 20: TypeSpec Helper Response Models Added (2 changes)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - TypeSpec-generated helper models for compilation
+#
+# Category 21: Pagination Extension Removed (1 change)
+#   Decision: ⚠️ NO FIX NEEDED
+#   Reason: Non-breaking - pagination handled through response model structure
+#
+
+# ============================================================================
+# Category 1: API Path Restructuring - Addons and Monitoring Config (8 changes)
+# ============================================================================
+# Analysis:
+# API paths for addons and monitoring configuration have been restructured from role-scoped 
+# endpoints (/roles/{roleName}/addons) to device-scoped endpoints (/addons). This changes 
+# the resource hierarchy and URL structure, which is a breaking change for existing clients.
+#
+# Root Cause:
+# TypeSpec model likely used incorrect parent resource hierarchy or path parameter decoration.
+# The addons and monitoring config operations should be nested under roles, not directly under device.
+# **CRITICAL**: @parentResource decorator must be applied to the MODEL, not the interface.
+#
+# Proposed Solution:
+# Update TypeSpec to correctly nest addons and monitoring config resources under the roles parent.
+# Apply @parentResource(Role) decorator to the Addon and MonitoringMetricConfiguration model definitions.
+# The interface operations will automatically inherit the correct path structure from the model.
+#
+# TSG Reference: https://azure.github.io/typespec-azure/docs/howtos/ARM/resource-type#parent-resources
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Restore role-scoped addon endpoints
+# File: Addon.tsp - Model: Addon
+# ----------------------------------------------------------------------------
+
+--- a/Addon.tsp
++++ b/Addon.tsp
+@@ -1,6 +1,8 @@
+ import "@azure-tools/typespec-azure-core";
+ import "@azure-tools/typespec-azure-resource-manager";
+ 
++@parentResource(Role)
+ model Addon is ProxyResource<AddonProperties> {
+   @key("addonName")
+   @path
+   @doc("The addon name.")
+   name: string;
+ }
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Restore role-scoped monitoring config endpoints
+# File: MonitoringMetricConfiguration.tsp - Model: MonitoringMetricConfiguration
+# ----------------------------------------------------------------------------
+
+--- a/MonitoringMetricConfiguration.tsp
++++ b/MonitoringMetricConfiguration.tsp
+@@ -1,6 +1,8 @@
+ import "@azure-tools/typespec-azure-core";
+ import "@azure-tools/typespec-azure-resource-manager";
+ 
++@parentResource(Role)
+ model MonitoringMetricConfiguration is ProxyResource<MonitoringMetricConfigurationProperties> {
+   @key("configurationName")
+   @path
+   @doc("The metric configuration name. Always 'default'.")
+   name: string;
+ }
++interface MonitoringConfig extends Azure.ResourceManager.ResourceInstanceOperations<MonitoringMetricConfiguration, MonitoringMetricConfigurationProperties> {
++  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig")
++  list is ArmResourceListByParent<MonitoringMetricConfiguration>;
++  
++  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default")
++  get is ArmResourceRead<MonitoringMetricConfiguration>;
++  
++  createOrUpdate is ArmResourceCreateOrReplaceAsync<MonitoringMetricConfiguration>;
++  
++  delete is ArmResourceDeleteAsync<MonitoringMetricConfiguration>;
++}
+
+# ============================================================================
+# Category 2: Security Settings Endpoint Consolidation (2 changes)
+# ============================================================================
+# Analysis:
+# The security settings update endpoint path changed from 
+# /securitySettings/default/update to /update, which is a breaking change.
+#
+# Root Cause:
+# TypeSpec operation likely used incorrect @route or path structure.
+#
+# Proposed Solution:
+# Restore the original path structure using explicit @route decorator.
+#
+# TSG Reference: https://github.com/Azure/autorest/blob/main/docs/generate/breaking-changes.md
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Restore security settings nested path
+# File: main.tsp - Interface: Devices
+# ----------------------------------------------------------------------------
+
+--- a/main.tsp
++++ b/main.tsp
+@@ -100,8 +100,8 @@
+   @doc("Update security settings.")
+   @post
+-  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/update")
++  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/securitySettings/default/update")
+   createOrUpdateSecuritySettings(
+     ...ResourceInstanceParameters<DataBoxEdgeDevice>,
+     @body securitySettings: SecuritySettings
+   ): ArmAcceptedLroResponse | ArmNoContentResponse<void>;
+
+# ============================================================================
+# Category 5: Common Types Migration - Error Models (70 changes)
+# ============================================================================
+# Analysis:
+# Error response models migrated from custom CloudError/CloudErrorBody to common-types ErrorResponse.
+# This is a MODEL NAME CHANGE which is ALWAYS a breaking change.
+#
+# Property Verification:
+# Old model 'CloudError' properties:
+#   - error: object ($ref: #/definitions/CloudErrorBody)
+#
+# Old model 'CloudErrorBody' properties (nested):
+#   - code: string (optional)
+#   - message: string (optional)
+#   - details: array of CloudErrorBody (optional)
+#
+# New model 'ErrorResponse' from common-types/v3 properties:
+#   - error: object ($ref: common-types/v3/types.json#/definitions/ErrorDetail)
+#
+# New model 'ErrorDetail' from common-types/v3 properties (nested):
+#   - code: string (optional, readOnly: true)
+#   - message: string (optional, readOnly: true)
+#   - target: string (optional, readOnly: true) ← NEW
+#   - details: array of ErrorDetail (optional, readOnly: true)
+#   - additionalInfo: array of ErrorAdditionalInfo (optional, readOnly: true) ← NEW
+#
+# Differences Found:
+#   1. Model name changed: CloudError → ErrorResponse ❌ BREAKING
+#   2. Nested model name changed: CloudErrorBody → ErrorDetail ❌ BREAKING
+#   3. ReadOnly constraints ADDED to all properties (code, message, details) ❌ BREAKING
+#   4. New properties added: target, additionalInfo ❌ BREAKING (changes structure)
+#   5. Missing 'target' property in old model
+#   6. Missing 'additionalInfo' property in old model
+#
+# Breaking Changes Summary:
+#   - Model name change (CloudError→ErrorResponse)
+#   - Nested model name change (CloudErrorBody→ErrorDetail)
+#   - ReadOnly constraints added
+#   - Properties structure changed
+#
+# Decision: ✅ MUST FIX
+# Justification: Multiple breaking changes - model names changed and readOnly constraints added
+#
+# Root Cause:
+# TypeSpec using common-types ErrorResponse directly instead of defining custom error models
+# to match original CloudError schema.
+#
+# Proposed Solution:
+# Define custom error models matching the original CloudError/CloudErrorBody structure exactly.
+# Do not use common-types ErrorResponse for default error responses.
+#
+# TSG Reference: https://github.com/Azure/typespec-azure/blob/main/docs/migrate-swagger/faq/common-types.md
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Define custom error models matching original CloudError
+# File: models.tsp - Add custom error models
+# ----------------------------------------------------------------------------
+
+--- a/models.tsp
++++ b/models.tsp
+@@ -10,6 +10,28 @@
+ using Azure.ResourceManager;
+ using TypeSpec.Http;
+ 
++@doc("Error response body.")
++model CloudErrorBody {
++  @doc("Error code")
++  code?: string;
++
++  @doc("Error message")
++  message?: string;
++
++  @doc("Error details")
++  details?: CloudErrorBody[];
++}
++
++@doc("Error response indicating failure.")
++model CloudError {
++  @doc("Error body")
++  error?: CloudErrorBody;
++}
++
++// Mark as external to match original swagger
++@@extension(CloudError, "x-ms-external", true);
++
+ // Rest of models...
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Update all 68 operation error responses to use CloudError
+# File: main.tsp - Update all operation default responses
+# ----------------------------------------------------------------------------
+
+--- a/main.tsp
++++ b/main.tsp
+@@ -50,140 +50,140 @@
+ 
+ interface Operations extends Azure.ResourceManager.Operations {
+   @doc("Get operations")
+   list is ArmListOperations<Operation, 
+-    Response = ArmResponse<OperationListResult> | ErrorResponse>;
++    Response = ArmResponse<OperationListResult> | CloudError>;
+ }
+ 
+ interface AvailableSkus {
+   @doc("List available SKUs")
+   list is ArmListOperations<DataBoxEdgeSku,
+-    Response = ArmResponse<DataBoxEdgeSkuList> | ErrorResponse>;
++    Response = ArmResponse<DataBoxEdgeSkuList> | CloudError>;
+ }
+ 
+ interface Devices extends Azure.ResourceManager.ResourceOperations<DataBoxEdgeDevice, DataBoxEdgeDeviceProperties> {
+   listBySubscription is ArmListBySubscription<DataBoxEdgeDevice,
+-    Response = ArmResponse<DataBoxEdgeDeviceList> | ErrorResponse>;
++    Response = ArmResponse<DataBoxEdgeDeviceList> | CloudError>;
+     
+   listByResourceGroup is ArmResourceListByParent<DataBoxEdgeDevice,
+-    Response = ArmResponse<DataBoxEdgeDeviceList> | ErrorResponse>;
++    Response = ArmResponse<DataBoxEdgeDeviceList> | CloudError>;
+     
+-  get is ArmResourceRead<DataBoxEdgeDevice, Response = ArmResponse<DataBoxEdgeDevice> | ErrorResponse>;
++  get is ArmResourceRead<DataBoxEdgeDevice, Response = ArmResponse<DataBoxEdgeDevice> | CloudError>;
+   
+-  createOrUpdate is ArmResourceCreateOrReplaceSync<DataBoxEdgeDevice, Response = ArmResponse<DataBoxEdgeDevice> | ErrorResponse>;
++  createOrUpdate is ArmResourceCreateOrReplaceSync<DataBoxEdgeDevice, Response = ArmResponse<DataBoxEdgeDevice> | CloudError>;
+   
+-  update is ArmResourcePatchSync<DataBoxEdgeDevice, DataBoxEdgeDevicePatch, Response = ArmResponse<DataBoxEdgeDevice> | ErrorResponse>;
++  update is ArmResourcePatchSync<DataBoxEdgeDevice, DataBoxEdgeDevicePatch, Response = ArmResponse<DataBoxEdgeDevice> | CloudError>;
+   
+-  delete is ArmResourceDeleteAsync<DataBoxEdgeDevice, Response = ArmDeleteAcceptedLroResponse | ArmDeletedNoContentResponse | ErrorResponse>;
++  delete is ArmResourceDeleteAsync<DataBoxEdgeDevice, Response = ArmDeleteAcceptedLroResponse | ArmDeletedNoContentResponse | CloudError>;
+   
+   // Continue this pattern for ALL 68 operations that currently reference ErrorResponse
+   // Replace ErrorResponse with CloudError in default error responses
+ }
+
+# NOTE: The above pattern must be applied to all 68 operations across all interfaces:
+# - Operations_List
+# - AvailableSkus_List
+# - Devices_ListBySubscription, Devices_ListByResourceGroup, Devices_Delete, Devices_Get, Devices_Patch, Devices_Put
+# - Alerts_List, Alerts_Get
+# - BandwidthSchedules_List, BandwidthSchedules_Delete, BandwidthSchedules_Get, BandwidthSchedules_Put
+# - Devices_DeviceCapacityCheck
+# - DeviceCapacityInfo_Get
+# - DiagnosticProactiveLogCollectionSettings_Get, DiagnosticProactiveLogCollectionSettings_Put
+# - DiagnosticRemoteSupportSettings_Get, DiagnosticRemoteSupportSettings_Put
+# - Devices_DownloadUpdates
+# - Devices_GenerateCertificate
+# - Devices_GetExtendedInformation
+# - Devices_InstallUpdates
+# - Jobs_Get
+# - NetworkSettings_Get
+# - Nodes_List
+# - OperationsStatus_Get
+# - Orders_List, Orders_Delete, Orders_Get, Orders_Put, Orders_ListDCAccessCode
+# - Roles_List, Roles_Delete, Roles_Get, Roles_Put
+# - Devices_ScanForUpdates
+# - Shares_List, Shares_Delete, Shares_Get, Shares_Put, Shares_Refresh
+# - StorageAccountCredentials_List, StorageAccountCredentials_Delete, StorageAccountCredentials_Get, StorageAccountCredentials_Put
+# - StorageAccounts_List, StorageAccounts_Delete, StorageAccounts_Get, StorageAccounts_Put
+# - Containers_List, Containers_Delete, Containers_Get, Containers_Put, Containers_Refresh
+# - Triggers_List, Triggers_Delete, Triggers_Get, Triggers_Put
+# - Devices_TriggerSupportPackage
+# - Devices_UpdateExtendedInformation
+# - UpdateSummary_Get
+# - Devices_UploadCertificate
+# - Users_List, Users_Delete, Users_Get, Users_Put
+# - Addons_List, Addons_Get, Addons_CreateOrUpdate, Addons_Delete
+# - MonitoringConfig_List, MonitoringConfig_Get, MonitoringConfig_CreateOrUpdate, MonitoringConfig_Delete
+
+# ============================================================================
+# Category 7: Common Types Migration - Operations List Model (5 changes)
+# ============================================================================
+# Analysis:
+# Operations list response model changed from custom OperationsList to common-types OperationListResult.
+# This is a MODEL NAME CHANGE which is ALWAYS a breaking change. Additionally, custom Operation, 
+# OperationDisplay, and OperationProperties models were deleted.
+#
+# Property Verification:
+# Old model 'OperationsList' properties:
+#   - value: array of Operation (optional)
+#   - nextLink: string (optional)
+#
+# Old model 'Operation' properties (nested):
+#   - name: string (optional)
+#   - display: object ($ref: #/definitions/OperationDisplay) (optional)
+#   - properties: object ($ref: #/definitions/OperationProperties) (optional)
+#
+# Old model 'OperationDisplay' properties (nested under Operation):
+#   - provider: string (optional)
+#   - resource: string (optional)
+#   - operation: string (optional)
+#   - description: string (optional)
+#
+# Old model 'OperationProperties' properties (nested under Operation):
+#   - serviceSpecification: object ($ref: #/definitions/ServiceSpecification) (optional)
+#
+# New model 'OperationListResult' from common-types/v3 properties:
+#   - value: array of Operation (optional)
+#   - nextLink: string (optional)
+#
+# New model 'Operation' from common-types/v3 properties (nested):
+#   - name: string (optional, readOnly: true)
+#   - isDataAction: boolean (optional, readOnly: true)
+#   - display: object ($ref: OperationDisplay) (optional)
+#   - origin: string enum (optional, readOnly: true)
+#   - actionType: string enum (optional, readOnly: true)
+#
+# New model 'OperationDisplay' from common-types/v3 properties (nested):
+#   - provider: string (optional, readOnly: true)
+#   - resource: string (optional, readOnly: true)
+#   - operation: string (optional, readOnly: true)
+#   - description: string (optional, readOnly: true)
+#
+# Differences Found:
+#   1. Model name changed: OperationsList → OperationListResult ❌ BREAKING
+#   2. Operation.properties.serviceSpecification REMOVED ❌ BREAKING
+#   3. ReadOnly constraints ADDED to Operation.name, display properties ❌ BREAKING
+#   4. New properties added to Operation: isDataAction, origin, actionType
+#
+# Breaking Changes Summary:
+#   - Model name change (OperationsList→OperationListResult)
+#   - Property removed (Operation.properties.serviceSpecification)
+#   - ReadOnly constraints added
+#
+# Decision: ✅ MUST FIX
+# Justification: Model name changed AND serviceSpecification property removed
+#
+# Root Cause:
+# TypeSpec using common-types OperationListResult which doesn't include service-specific properties
+# like serviceSpecification that were in the original swagger.
+#
+# Proposed Solution:
+# Define custom OperationsList model with custom Operation model that includes the serviceSpecification
+# property. Extend common-types Operation if needed but preserve the original property structure.
+#
+# TSG Reference: https://github.com/Azure/typespec-azure/blob/main/docs/migrate-swagger/faq/common-types.md
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Define custom operations list models
+# File: models.tsp - Add custom operations models
+# ----------------------------------------------------------------------------
+
+--- a/models.tsp
++++ b/models.tsp
+@@ -30,6 +30,58 @@
+ // Mark as external to match original swagger
+ @@extension(CloudError, "x-ms-external", true);
+ 
++@doc("Service specification.")
++model ServiceSpecification {
++  @doc("Metric specifications")
++  metricSpecifications?: MetricSpecification_V1[];
++}
++
++@doc("Metric dimension.")
++model MetricDimension_V1 {
++  @doc("Dimension name")
++  name?: string;
++
++  @doc("Dimension display name")
++  displayName?: string;
++}
++
++@doc("Metric specification.")
++model MetricSpecification_V1 {
++  @doc("Metric name")
++  name?: string;
++
++  @doc("Metric display name")
++  displayName?: string;
++
++  @doc("Metric dimensions")
++  dimensions?: MetricDimension_V1[];
++
++  @doc("Metric aggregation type")
++  aggregationType?: string;
++
++  @doc("Metric unit")
++  unit?: string;
++}
++
++@doc("Operation properties.")
++model OperationProperties {
++  @doc("Service specification")
++  serviceSpecification?: ServiceSpecification;
++}
++
++@doc("Operation display information.")
++model OperationDisplay {
++  @doc("Provider name")
++  provider?: string;
++
++  @doc("Resource name")
++  resource?: string;
++
++  @doc("Operation name")
++  operation?: string;
++
++  @doc("Operation description")
++  description?: string;
++}
++
++@doc("Operation information.")
++model Operation {
++  @doc("Operation name")
++  name?: string;
++
++  @doc("Operation display information")
++  display?: OperationDisplay;
++
++  @doc("Operation properties")
++  properties?: OperationProperties;
++}
++
++@doc("[Placeholder] Discription for page model")
++model OperationsList {
++  @doc("List of operations")
++  value?: Operation[];
++
++  @doc("Next link")
++  nextLink?: string;
++}
++
+ // Rest of models...
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Update Operations interface to use custom OperationsList
+# File: main.tsp - Interface: Operations
+# ----------------------------------------------------------------------------
+
+--- a/main.tsp
++++ b/main.tsp
+@@ -48,10 +48,14 @@
+ }
+ namespace Microsoft.DataBoxEdge;
+ 
+-interface Operations extends Azure.ResourceManager.Operations {
++interface Operations {
+   @doc("Get operations")
+-  list is ArmListOperations<Operation, 
+-    Response = ArmResponse<OperationListResult> | CloudError>;
++  @get
++  @route("/providers/Microsoft.DataBoxEdge/operations")
++  @armResourceList(Operation)
++  list(...ApiVersionParameter): {
++    @statusCode statusCode: 200;
++    @body body: OperationsList;
++  } | CloudError;
+ }
+
+# ============================================================================
+# Category 15: Secret Properties x-ms-secret Extension Removed (2 changes)
+# ============================================================================
+# Analysis:
+# The x-ms-secret extension was removed from encryptionCertThumbprint (AsymmetricEncryptedSecret)
+# and privateKey (GenerateCertResponse) properties. This is ALWAYS a breaking change because
+# SDKs will no longer treat these properties as sensitive/secret values.
+#
+# Root Cause:
+# TypeSpec missing @secret decorator on sensitive properties.
+#
+# Proposed Solution:
+# Add @secret decorator to the encryptionCertThumbprint and privateKey properties in TypeSpec
+# to generate x-ms-secret extension in the output swagger.
+#
+# TSG Reference: https://github.com/Azure/typespec-azure/blob/main/docs/reference/decorators.md#secret
+
+# ----------------------------------------------------------------------------
+# Fix for Case: Add @secret decorator to sensitive properties
+# File: models.tsp - Models: AsymmetricEncryptedSecret, GenerateCertResponse
+# ----------------------------------------------------------------------------
+
+--- a/models.tsp
++++ b/models.tsp
+@@ -150,10 +150,12 @@
+ @doc("Asymmetric encrypted secret.")
+ model AsymmetricEncryptedSecret {
+   @doc("Encryption certificate thumbprint")
++  @secret
+   encryptionCertThumbprint?: string;
+ 
+   @doc("Encrypted secret value")
+   value: string;
+ 
+   @doc("Encryption algorithm")
+   encryptionAlgorithm: EncryptionAlgorithm;
+ }
+ 
+ @doc("Certificate generation response.")
+ model GenerateCertResponse {
+   @doc("Public certificate")
+   publicKey?: string;
+ 
+   @doc("Private key")
++  @secret
+   privateKey?: string;
+ 
+   @doc("Certificate expiry time")
+   expiryTimeInUTC?: string;
+ }
+
+# ============================================================================
+# IMPORTANT NOTES FOR CATEGORY 1 (API Path Restructuring)
+# ============================================================================
+# This category affects 8 endpoint changes across 2 resource types:
+# 1. Addons operations (4 endpoints): ListByRole, Get, CreateOrUpdate, Delete
+# 2. MonitoringConfig operations (4 endpoints): List, Get, CreateOrUpdate, Delete
+#
+# All fixes require updating the @route decorator and ensuring @parentResource(Role) is set.
+#
+# Complete list of affected operations:
+# - Addons_ListByRole: /roles/{roleName}/addons → /addons (MUST FIX)
+# - Addons_Get: /roles/{roleName}/addons/{addonName} → /addons/{addonName} (MUST FIX)
+# - Addons_CreateOrUpdate: /roles/{roleName}/addons/{addonName} → /addons/{addonName} (MUST FIX)
+# - Addons_Delete: /roles/{roleName}/addons/{addonName} → /addons/{addonName} (MUST FIX)
+# - MonitoringConfig_List: /roles/{roleName}/monitoringConfig → /monitoringConfig (MUST FIX)
+# - MonitoringConfig_Get: /roles/{roleName}/monitoringConfig/default → /monitoringConfig/default (MUST FIX)
+# - MonitoringConfig_CreateOrUpdate: /roles/{roleName}/monitoringConfig/default → /monitoringConfig/default (MUST FIX)
+# - MonitoringConfig_Delete: /roles/{roleName}/monitoringConfig/default → /monitoringConfig/default (MUST FIX)
+
+# ============================================================================
+# IMPORTANT NOTES FOR CATEGORY 5 (Error Models)
+# ============================================================================
+# This category affects 68 operations across all interfaces. Every operation that currently
+# uses ErrorResponse in default error responses must be updated to use CloudError instead.
+#
+# Search pattern to find all affected operations:
+# grep -r "ErrorResponse" main.tsp models.tsp
+# 
+# The fix must be applied to default error responses in these operation categories:
+# - List operations (ArmListOperations, ArmResourceListByParent)
+# - Read operations (ArmResourceRead)
+# - Create/Update operations (ArmResourceCreateOrReplaceAsync, ArmResourceCreateOrReplaceSync)
+# - Delete operations (ArmResourceDeleteAsync)
+# - Custom POST operations
+#
+# Example pattern for each operation type:
+# - ArmListOperations: Change Response = ... | ErrorResponse to Response = ... | CloudError
+# - ArmResourceRead: Change Response = ... | ErrorResponse to Response = ... | CloudError
+# - Custom operations: Change default response from ErrorResponse to CloudError
+
+# ============================================================================
+# Fix Generation Summary
+# ============================================================================
+# Total categories analyzed: 21
+# Categories requiring fixes: 5
+# Categories verified as non-breaking: 16
+#
+# Breakdown:
+# - Category 1 (API Path Restructuring): ✅ FIX - Path structure changed (8 operations)
+# - Category 2 (Security Settings Endpoint): ✅ FIX - Path changed (1 operation)
+# - Category 3 (Service Description): ⚠️ NO FIX - Non-breaking addition
+# - Category 4 (LRO Headers): ⚠️ NO FIX - Non-breaking enhancement
+# - Category 5 (Error Models): ✅ FIX - Model name changed (68 operations)
+# - Category 6 (Resource Base Models): ⚠️ NO FIX - ARMBaseModel→ProxyResource/TrackedResource exception
+# - Category 7 (Operations List Model): ✅ FIX - Model name changed + property removed
+# - Category 8 (Service Specification Models): ⚠️ NO FIX - Unused internal models
+# - Category 9 (SystemData Property): ⚠️ NO FIX - Inherited from base models
+# - Category 10 (Discriminator Pattern): ⚠️ NO FIX - Modern TypeSpec pattern
+# - Category 11 (ARM Resource Properties): ⚠️ NO FIX - Inherited from base models
+# - Category 12 (Placeholder Properties): ⚠️ NO FIX - Non-breaking addition
+# - Category 13 (Required Property): ⚠️ NO FIX - Strengthening constraint
+# - Category 14 (ReadOnly Attribute): ⚠️ NO FIX - Response-only models
+# - Category 15 (x-ms-secret Extension): ✅ FIX - Extension removal (2 properties)
+# - Category 16 (x-ms-identifiers): ⚠️ NO FIX - Not required for primitive arrays
+# - Category 17 (TrackedResource Properties): ⚠️ NO FIX - Inherited from base
+# - Category 18 (UniqueItems Attribute): ⚠️ NO FIX - Redundant default
+# - Category 19 (Enum Name Normalization): ⚠️ NO FIX - Type name only
+# - Category 20 (TypeSpec Helper Models): ⚠️ NO FIX - Compilation helpers
+# - Category 21 (Pagination Extension): ⚠️ NO FIX - Handled by response model

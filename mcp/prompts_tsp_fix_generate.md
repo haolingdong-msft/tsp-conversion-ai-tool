@@ -49,11 +49,10 @@ Process all categories from SWAGGER_SEMANTIC_DIFF_ANALYSIS.md sequentially. Each
 ### Step 2: Determine Fix Necessity
 
 All diffs must be fixed except:
-Those drop into the three categories (Using Resources from Common Types, Using Page Model from Library, Handling 'readOnly' in Model Schemas) on this page: https://azure.github.io/typespec-azure/docs/migrate-swagger/faq/mustread/ OR
-Non-semantic diff: model inlined and hierarchical structure change without any changes on the model properties by checking recursively.
+Those drop into the three categories (Using Resources from Common Types, Using Page Model from Library, Handling 'readOnly' in Model Schemas) on this page: https://azure.github.io/typespec-azure/docs/migrate-swagger/faq/mustread/ OR drop in to two categories of 
+Non-semantic diff(model inlined and hierarchical structure change)
 
-If your decision is to NOT fix one category, you must verify again and provide reason, if it belongs to one of the three categories, show which category it belongs to; If it belongs non-semantic diff, output the reason.
-
+If your decision is to NOT fix one category, you must verify again and provide reason on which category it belongs to.
 
 ### Step 3: Search TSG & Propose Solution
 

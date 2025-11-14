@@ -40,7 +40,7 @@ const server = new Server(
 // Read template and instruction files
 async function readTemplateFiles() {
   const templatePath = path.join(__dirname, "..", "SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md");
-  const instructionsPath = path.join(__dirname, "..", "prompts.md");
+  const instructionsPath = path.join(__dirname, "..", "prompts_swagger_diff_report_generate.md");
   const scriptPath = path.join(__dirname, "..", "count-api-changes-items.ps1");
   
   try {

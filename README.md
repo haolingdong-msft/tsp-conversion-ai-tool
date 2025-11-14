@@ -65,14 +65,24 @@ Once configured, you can use the following AI prompts:
   analyze swagger semantic diff for <service-name>
   ```
   The tool will provide comprehensive semantic diff analysis between old and new swagger specifications, categorizing changes and identifying their semantic impact during TypeSpec migrations.
+
+
   ```
   generate typespec fix report for <service-name>
   ```
   
   The tool will generate fix report without updating code
 
+  
   ```
   apply typespec fix report for <service-name>
   ```
-  The tool will update typespec code and ask you to commit
+  The tool will update typespec code and commit for each category one by one
+  
+  
+  ```
+  tsp compile and tsmv for <service-name>
+  ```
+  The tool will run tsp compile and tsmv for one service
+
 
