@@ -6,7 +6,7 @@ A Model Context Protocol (MCP) server that provides AI-powered tools for TypeSpe
 
 This MCP server provides four specialized tools for TypeSpec migration and swagger validation:
 
-1. **Swagger Semantic Diff Analysis** - Analyzes and categorizes all differences between old and new swagger files.
+1. **Swagger Semantic Diff Analysis** - Analyzes and categorizes all differences between old and new swagger files. It reads `diff-output` folder(e.g. `C:\workspace\azure-rest-api-specs\specification\databoxedge\DataBoxEdge.Management\diff-output`)
    - **Prompt:** [`mcp/prompts_swagger_diff_report_generate.md`](mcp/prompts_swagger_diff_report_generate.md)
    - **Template:** [`mcp/SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md`](mcp/SWAGGER_SEMANTIC_DIFF_ANALYSIS_TEMPLATE.md)
    - **Output:** `SWAGGER_SEMANTIC_DIFF_ANALYSIS.md`
